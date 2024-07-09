@@ -1,5 +1,27 @@
+import random
 from tkinter import *
 from tkinter.ttk import *
+import os
+import json
+
+
+def Read_MAA_Config(path):
+    with open(path,"r",encoding='utf-8') as MAA_Config:
+    #打开json并传入MAA_data
+        MAA_data = json.load(MAA_Config)
+        return MAA_data
+    
+def Save_MAA_Config(path,data):
+    #打开json并写入data内数据
+    with open(path,"w",encoding='utf-8') as MAA_Config:
+        json.dump(data,MAA_Config,indent=4,ensure_ascii=False)
+
+def Get_Values_list(path,key1):
+    #获取组件的初始参数
+    List = []
+    for i in Read_MAA_Config(path)[key1]:
+        List.append(i["name"])
+    return List
 
 class WinGUI(Tk):
     def __init__(self):
@@ -17,6 +39,10 @@ class WinGUI(Tk):
         self.tk_select_box_Add_Task_Select = self.__tk_select_box_Add_Task_Select(self)
         self.tk_button_Add_Task_Button = self.__tk_button_Add_Task_Button(self)
         self.tk_label_Task_List_Label = self.__tk_label_Task_List_Label(self)
+        self.tk_list_box_Task_List = self.__tk_list_box_Task_List(self)
+        self.tk_button_Move_Up_Button = self.__tk_button_Move_Up_Button(self)
+        self.tk_button_Move_Down_Button = self.__tk_button_Move_Down_Button(self)
+        self.tk_button_Delete_Button = self.__tk_button_Delete_Button(self)
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
@@ -96,12 +122,12 @@ class WinGUI(Tk):
         return ipt
     def __tk_select_box_Resource_Type_Select(self,parent):
         cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("列表框","Python","Tkinter Helper")
+        cb['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","resource"))
         cb.place(x=80, y=80, width=140, height=30)
         return cb
     def __tk_select_box_Add_Task_Select(self,parent):
         cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("列表框","Python","Tkinter Helper")
+        cb['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","task"))
         cb.place(x=80, y=160, width=260, height=30)
         return cb
     def __tk_button_Add_Task_Button(self,parent):
@@ -112,6 +138,24 @@ class WinGUI(Tk):
         label = Label(parent,text="任务列表",anchor="center", )
         label.place(x=380, y=0, width=180, height=30)
         return label
+    def __tk_list_box_Task_List(self,parent):
+        lb = Listbox(parent)
+        for item in Get_Values_list(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
+            lb.insert(END, item)
+        lb.place(x=360, y=40, width=220, height=400)
+        return lb
+    def __tk_button_Move_Up_Button(self,parent):
+        btn = Button(parent, text="上移", takefocus=False,)
+        btn.place(x=360, y=460, width=50, height=30)
+        return btn
+    def __tk_button_Move_Down_Button(self,parent):
+        btn = Button(parent, text="下移", takefocus=False,)
+        btn.place(x=445, y=460, width=50, height=30)
+        return btn
+    def __tk_button_Delete_Button(self,parent):
+        btn = Button(parent, text="删除", takefocus=False,)
+        btn.place(x=530, y=460, width=50, height=30)
+        return btn
 class Win(WinGUI):
     def __init__(self, controller):
         self.ctl = controller
@@ -119,12 +163,16 @@ class Win(WinGUI):
         self.__event_bind()
         self.__style_config()
         self.ctl.init(self)
+
     def __event_bind(self):
         self.tk_button_Start_Task.bind('<Button-1>',self.ctl.Start_Task)
         self.tk_input_ADB_Path_Input.bind('<Return>',self.ctl.Save_ADB_Path)
         self.tk_input_ADB_Address_Input.bind('<Return>',self.ctl.Save_ADB_Address)
         self.tk_select_box_Resource_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Resource_Type_Select)
         self.tk_button_Add_Task_Button.bind('<Button-1>',self.ctl.Add_Task)
+        self.tk_button_Move_Up_Button.bind('<Button-1>',self.ctl.Click_Move_Up_Button)
+        self.tk_button_Move_Down_Button.bind('<Button-1>',self.ctl.Click_Move_Down_Button)
+        self.tk_button_Delete_Button.bind('<Button-1>',self.ctl.Click_Delete_Button)
         pass
     def __style_config(self):
         pass
