@@ -5,6 +5,7 @@ import json
 
 
 def Read_MAA_Config(path):
+
     with open(path,"r",encoding='utf-8') as MAA_Config:
     #打开json并传入MAA_data
         MAA_data = json.load(MAA_Config)
@@ -20,6 +21,20 @@ def Get_Values_list(path,key1):
     List = []
     for i in Read_MAA_Config(path)[key1]:
         List.append(i["name"])
+    return List
+
+def Get_Values_list_Option(path,key1):
+    #获取组件的初始参数
+    List = []
+    for i in Read_MAA_Config(path)[key1]:
+        if i["option"]!=[]:
+            Option_text = str(i["name"])+" "
+            Option_Lens = len(i["option"])
+            for t in range(0,Option_Lens,1):
+                Option_text+=str(i["option"][t]["value"])+" "
+            List.append(Option_text)
+        else:
+            List.append(i["name"])
     return List
 
 class WinGUI(Tk):
@@ -147,7 +162,7 @@ class WinGUI(Tk):
         return label
     def __tk_list_box_Task_List(self,parent):
         lb = Listbox(parent)
-        for item in Get_Values_list(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
+        for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
             lb.insert(END, item)
         lb.place(x=360, y=40, width=220, height=400)
         return lb
