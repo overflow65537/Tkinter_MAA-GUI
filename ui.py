@@ -1,4 +1,3 @@
-import random
 from tkinter import *
 from tkinter.ttk import *
 import os
@@ -43,6 +42,14 @@ class WinGUI(Tk):
         self.tk_button_Move_Up_Button = self.__tk_button_Move_Up_Button(self)
         self.tk_button_Move_Down_Button = self.__tk_button_Move_Down_Button(self)
         self.tk_button_Delete_Button = self.__tk_button_Delete_Button(self)
+        self.tk_select_box_Add_Task_Select_1 = self.__tk_select_box_Add_Task_Select_1(self)
+        self.tk_select_box_Add_Task_Select_2 = self.__tk_select_box_Add_Task_Select_2(self)
+        self.tk_select_box_Add_Task_Select_3 = self.__tk_select_box_Add_Task_Select_3(self)
+        self.tk_select_box_Add_Task_Select_4 = self.__tk_select_box_Add_Task_Select_4(self)
+        self.tk_label_Add_Task_Label_3 = self.__tk_label_Add_Task_Label_3(self)
+        self.tk_label_Add_Task_Label_4 = self.__tk_label_Add_Task_Label_4(self)
+        self.tk_label_Add_Task_Label_5 = self.__tk_label_Add_Task_Label_5(self)
+        self.tk_label_Add_Task_Label_6 = self.__tk_label_Add_Task_Label_6(self)
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
@@ -90,7 +97,7 @@ class WinGUI(Tk):
         self.scrollbar_autohide(vbar, hbar, widget)
     def __tk_button_Start_Task(self,parent):
         btn = Button(parent, text="开始任务", takefocus=False,)
-        btn.place(x=0, y=240, width=70, height=30)
+        btn.place(x=200, y=460, width=70, height=30)
         return btn
     def __tk_label_ADB_Part_Label(self,parent):
         label = Label(parent,text="ADB路径",anchor="center", )
@@ -132,7 +139,7 @@ class WinGUI(Tk):
         return cb
     def __tk_button_Add_Task_Button(self,parent):
         btn = Button(parent, text="添加任务", takefocus=False,)
-        btn.place(x=0, y=200, width=70, height=30)
+        btn.place(x=80, y=460, width=70, height=30)
         return btn
     def __tk_label_Task_List_Label(self,parent):
         label = Label(parent,text="任务列表",anchor="center", )
@@ -156,6 +163,42 @@ class WinGUI(Tk):
         btn = Button(parent, text="删除", takefocus=False,)
         btn.place(x=530, y=460, width=50, height=30)
         return btn
+    def __tk_select_box_Add_Task_Select_1(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("1号选项")
+        cb.place(x=80, y=200, width=260, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_2(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("2号选项")
+        cb.place(x=80, y=240, width=260, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_3(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("3号选项")
+        cb.place(x=80, y=280, width=260, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_4(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("4号选项")
+        cb.place(x=80, y=320, width=260, height=30)
+        return cb
+    def __tk_label_Add_Task_Label_3(self,parent):
+        label = Label(parent,text="1号标签",anchor="center", )
+        label.place(x=0, y=200, width=70, height=30)
+        return label
+    def __tk_label_Add_Task_Label_4(self,parent):
+        label = Label(parent,text="2号标签",anchor="center", )
+        label.place(x=0, y=240, width=70, height=30)
+        return label
+    def __tk_label_Add_Task_Label_5(self,parent):
+        label = Label(parent,text="3号标签",anchor="center", )
+        label.place(x=0, y=280, width=70, height=30)
+        return label
+    def __tk_label_Add_Task_Label_6(self,parent):
+        label = Label(parent,text="4号标签",anchor="center", )
+        label.place(x=0, y=320, width=70, height=30)
+        return label
 class Win(WinGUI):
     def __init__(self, controller):
         self.ctl = controller
@@ -169,6 +212,7 @@ class Win(WinGUI):
         self.tk_input_ADB_Path_Input.bind('<Return>',self.ctl.Save_ADB_Path)
         self.tk_input_ADB_Address_Input.bind('<Return>',self.ctl.Save_ADB_Address)
         self.tk_select_box_Resource_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Resource_Type_Select)
+        self.tk_select_box_Add_Task_Select.bind('<<ComboboxSelected>>',self.ctl.Add_Task_Select_More_Select)
         self.tk_button_Add_Task_Button.bind('<Button-1>',self.ctl.Add_Task)
         self.tk_button_Move_Up_Button.bind('<Button-1>',self.ctl.Click_Move_Up_Button)
         self.tk_button_Move_Down_Button.bind('<Button-1>',self.ctl.Click_Move_Down_Button)
