@@ -11,10 +11,10 @@ def Read_MAA_Config(path):
         MAA_data = json.load(MAA_Config)
         return MAA_data
     
-def Save_MAA_Config(path,data):
+def Save_MAA_Config(path,date):
     #打开json并写入data内数据
     with open(path,"w",encoding='utf-8') as MAA_Config:
-        json.dump(data,MAA_Config,indent=4,ensure_ascii=False)
+        json.dump(date,MAA_Config,indent=4,ensure_ascii=False)
 
 def Get_Values_list(path,key1):
     #获取组件的初始参数
@@ -22,7 +22,7 @@ def Get_Values_list(path,key1):
     for i in Read_MAA_Config(path)[key1]:
         List.append(i["name"])
     return List
-
+        
 def Get_Values_list_Option(path,key1):
     #获取组件的初始参数
     List = []

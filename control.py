@@ -4,15 +4,20 @@ import os
 import json
 
 def Read_MAA_Config(path):
+    if not os.path.exists(os.getcwd()+"\MAA_bin\config\maa_pi_config.json"):
+        os.makedirs(os.getcwd()+"\MAA_bin\config\\")
+        date = {"adb": {"adb_path":"请在此处填写ADB路径,回车确定","address":"请在此处填写ADB端口,回车确定","config": {}},"controller": {"name": "安卓端","type": "Adb"},"resource":"官服","task":[]}
+        with open(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","w",encoding='utf-8') as MAA_Config:
+            json.dump(date,MAA_Config,indent=4,ensure_ascii=False)
     with open(path,"r",encoding='utf-8') as MAA_Config:
         # 打开json并传入MAA_data
         MAA_data = json.load(MAA_Config)
         return MAA_data
     
-def Save_MAA_Config(path,data):
+def Save_MAA_Config(path,date):
         # 打开json并写入data内数据
     with open(path,"w",encoding='utf-8') as MAA_Config:
-        json.dump(data,MAA_Config,indent=4,ensure_ascii=False)
+        json.dump(date,MAA_Config,indent=4,ensure_ascii=False)
 
 def Get_Values_list2(path,key1):
     List = []
@@ -98,7 +103,7 @@ class Controller:
 
     def Save_ADB_Path(self,evt):
         #打开maa_pi_config.json并写入新的ADB路径
-        ADB_Path = self.ui.tk_input_ADB_Path_Input.get()
+        ADB_Path = self.ui.tk_input_ADB_Path_Input.get().replace("\\","/")
         MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
         MAA_Pi_Config["adb"]["adb_path"] = ADB_Path
         Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
