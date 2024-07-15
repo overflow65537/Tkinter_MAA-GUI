@@ -1,41 +1,7 @@
+from tool import *
 from tkinter import *
 from tkinter.ttk import *
-import os
-import json
 
-
-def Read_MAA_Config(path):
-
-    with open(path,"r",encoding='utf-8') as MAA_Config:
-    #打开json并传入MAA_data
-        MAA_data = json.load(MAA_Config)
-        return MAA_data
-    
-def Save_MAA_Config(path,date):
-    #打开json并写入data内数据
-    with open(path,"w",encoding='utf-8') as MAA_Config:
-        json.dump(date,MAA_Config,indent=4,ensure_ascii=False)
-
-def Get_Values_list(path,key1):
-    #获取组件的初始参数
-    List = []
-    for i in Read_MAA_Config(path)[key1]:
-        List.append(i["name"])
-    return List
-        
-def Get_Values_list_Option(path,key1):
-    #获取组件的初始参数
-    List = []
-    for i in Read_MAA_Config(path)[key1]:
-        if i["option"]!=[]:
-            Option_text = str(i["name"])+" "
-            Option_Lens = len(i["option"])
-            for t in range(0,Option_Lens,1):
-                Option_text+=str(i["option"][t]["value"])+" "
-            List.append(Option_text)
-        else:
-            List.append(i["name"])
-    return List
 
 class WinGUI(Tk):
     def __init__(self):
@@ -65,6 +31,13 @@ class WinGUI(Tk):
         self.tk_label_Add_Task_Label_4 = self.__tk_label_Add_Task_Label_4(self)
         self.tk_label_Add_Task_Label_5 = self.__tk_label_Add_Task_Label_5(self)
         self.tk_label_Add_Task_Label_6 = self.__tk_label_Add_Task_Label_6(self)
+        self.tk_label_Controller_Type_Label = self.__tk_label_Controller_Type_Label(self)
+        self.tk_select_box_Controller_Type_Select = self.__tk_select_box_Controller_Type_Select(self)
+        self.tk_input_Input_Author_Name = self.__tk_input_Input_Author_Name(self)
+        self.tk_button_Update_button = self.__tk_button_Update_button(self)
+        self.tk_label_Author_Name_Label = self.__tk_label_Author_Name_Label(self)
+        self.tk_label_Project_Name_Label = self.__tk_label_Project_Name_Label(self)
+        self.tk_input_Project_Name = self.__tk_input_Project_Name(self)
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
@@ -166,6 +139,11 @@ class WinGUI(Tk):
             lb.insert(END, item)
         lb.place(x=360, y=40, width=220, height=400)
         return lb
+    def __tk_select_box_Controller_Type_Select(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","controller"))
+        cb.place(x=260, y=80, width=80, height=30)
+        return cb
     def __tk_button_Move_Up_Button(self,parent):
         btn = Button(parent, text="上移", takefocus=False,)
         btn.place(x=360, y=460, width=50, height=30)
@@ -214,6 +192,30 @@ class WinGUI(Tk):
         label = Label(parent,text="4号标签",anchor="center", )
         label.place(x=0, y=320, width=70, height=30)
         return label
+    def __tk_label_Controller_Type_Label(self,parent):
+        label = Label(parent,text="控制端",anchor="center", )
+        label.place(x=180, y=80, width=70, height=30)
+        return label
+    def __tk_input_Input_Author_Name(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=80, y=360, width=80, height=30)
+        return ipt
+    def __tk_button_Update_button(self,parent):
+        btn = Button(parent, text="更新", takefocus=False,)
+        btn.place(x=290, y=400, width=50, height=30)
+        return btn
+    def __tk_label_Author_Name_Label(self,parent):
+        label = Label(parent,text="作者名",anchor="center", )
+        label.place(x=0, y=360, width=70, height=30)
+        return label
+    def __tk_label_Project_Name_Label(self,parent):
+        label = Label(parent,text="项目名",anchor="center", )
+        label.place(x=180, y=360, width=70, height=30)
+        return label
+    def __tk_input_Project_Name(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=260, y=360, width=80, height=30)
+        return ipt
 class Win(WinGUI):
     def __init__(self, controller):
         self.ctl = controller
@@ -227,11 +229,15 @@ class Win(WinGUI):
         self.tk_input_ADB_Path_Input.bind('<Return>',self.ctl.Save_ADB_Path)
         self.tk_input_ADB_Address_Input.bind('<Return>',self.ctl.Save_ADB_Address)
         self.tk_select_box_Resource_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Resource_Type_Select)
+        self.tk_select_box_Resource_Type_Select.bind('<Button-1>',self.ctl.Save_ADB_Path)
         self.tk_select_box_Add_Task_Select.bind('<<ComboboxSelected>>',self.ctl.Add_Task_Select_More_Select)
+        self.tk_select_box_Add_Task_Select.bind('<Enter>',self.ctl.Save_ADB_Address)
         self.tk_button_Add_Task_Button.bind('<Button-1>',self.ctl.Add_Task)
         self.tk_button_Move_Up_Button.bind('<Button-1>',self.ctl.Click_Move_Up_Button)
         self.tk_button_Move_Down_Button.bind('<Button-1>',self.ctl.Click_Move_Down_Button)
         self.tk_button_Delete_Button.bind('<Button-1>',self.ctl.Click_Delete_Button)
+        self.tk_select_box_Controller_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Controller_Type_Select)
+        self.tk_list_box_Task_List.bind('<Delete>',self.ctl.Click_Delete_Button)
         pass
     def __style_config(self):
         pass

@@ -1,71 +1,41 @@
 from ui import Win
 import subprocess
 import os
-import json
+from tool import *
 
-def Read_MAA_Config(path):
-    if not os.path.exists(os.getcwd()+"\MAA_bin\config\maa_pi_config.json"):
-        os.makedirs(os.getcwd()+"\MAA_bin\config\\")
-        date = {"adb": {"adb_path":"请在此处填写ADB路径,回车确定","address":"请在此处填写ADB端口,回车确定","config": {}},"controller": {"name": "安卓端","type": "Adb"},"resource":"官服","task":[]}
-        with open(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","w",encoding='utf-8') as MAA_Config:
-            json.dump(date,MAA_Config,indent=4,ensure_ascii=False)
-    with open(path,"r",encoding='utf-8') as MAA_Config:
-        # 打开json并传入MAA_data
-        MAA_data = json.load(MAA_Config)
-        return MAA_data
-    
-def Save_MAA_Config(path,date):
-        # 打开json并写入data内数据
-    with open(path,"w",encoding='utf-8') as MAA_Config:
-        json.dump(date,MAA_Config,indent=4,ensure_ascii=False)
-
-def Get_Values_list2(path,key1):
-    List = []
-    for i in Read_MAA_Config(path)[key1]:
-        List.append(i)
-    return List
-
-def Get_Values_list_Option(path,key1):
-    #获取组件的初始参数
-    List = []
-    for i in Read_MAA_Config(path)[key1]:
-
-        if i["option"]!=[]:
-            Option_text = str(i["name"])+" "
-            Option_Lens = len(i["option"])
-            for t in range(0,Option_Lens,1):
-                Option_text+=str(i["option"][t]["value"])+" "
-            List.append(Option_text)
-        else:
-            List.append(i["name"])
-    return List
-
-def Get_Task_List(target):
-    #输入option名称来输出一个包含所有该option中所有cases的name列表
-    #具体逻辑为 interface.json文件/option键/选项名称/cases键/键为空,所以通过len计算长度来选择最后一个/name键
-    lists = []
-    Task_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")["option"][target]["cases"]
-    Lens = len(Task_Config)-1
-    for i in range(Lens,-1,-1):
-        lists.append(Task_Config[i]["name"])
-    return lists
 
 #获取初始resource序号
 Add_Resource_Type_Select_Values = []
 for i in Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")["resource"]:
     Add_Resource_Type_Select_Values.append(i["name"])
 Resource_Type = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["resource"]
-count = 0
+
+Resource_count = 0
 for i in Add_Resource_Type_Select_Values:
     if i == Resource_Type:
         break
     else:
-        count+=1
+        Resource_count+=1
+
+#获取初始Controller序号
+Add_Controller_Type_Select_Values = []
+for i in Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")["controller"]:
+    Add_Controller_Type_Select_Values.append(i["name"])
+Controller_Type = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["controller"]["name"]
+
+Controller_count = 0
+for i in Add_Controller_Type_Select_Values:
+    if i == Controller_Type:
+        break
+    else:
+        Controller_count+=1
+
 
 #初始显示
 init_ADB_Path = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["adb"]["adb_path"]
 init_ADB_Address = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["adb"]["address"]
-init_Resource_Type = count
+init_Resource_Type = Resource_count
+init_Controller_Type = Controller_count
 
 class Controller:
     # 导入UI类后，替换以下的 object 类型，将获得 IDE 属性提示功能
@@ -83,7 +53,8 @@ class Controller:
         #ADB地址和端口输入框
         self.ui.tk_input_ADB_Address_Input.insert(0,init_ADB_Address)
         self.ui.tk_input_ADB_Path_Input.insert(0,init_ADB_Path)
-        #服务器和任务下拉框
+        #服务器和任务下拉框和控制端下拉框
+        self.ui.tk_select_box_Controller_Type_Select.current(init_Controller_Type)
         self.ui.tk_select_box_Resource_Type_Select.current(init_Resource_Type)
         self.ui.tk_select_box_Add_Task_Select.current(0)
 
@@ -120,6 +91,13 @@ class Controller:
         Resource_Type_Select = self.ui.tk_select_box_Resource_Type_Select.get()
         MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
         MAA_Pi_Config["resource"] = Resource_Type_Select
+        Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+
+    def Save_Controller_Type_Select(self,evt):
+        #打开maa_pi_config.json并写入新的资源
+        Resource_Type_Select = self.ui.tk_select_box_Resource_Type_Select.get()
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config["controller"] = Resource_Type_Select
         Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
 
     def Add_Task(self,evt):
@@ -174,6 +152,7 @@ class Controller:
         self.ui.tk_list_box_Task_List.delete(0,100)
         for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
+        self.ui.tk_list_box_Task_List.selection_set(Select_Target-1)
         self.ui.tk_list_box_Task_List.update()
 
     def Click_Move_Down_Button(self,evt):
@@ -187,6 +166,7 @@ class Controller:
         self.ui.tk_list_box_Task_List.delete(0,100)
         for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
+        self.ui.tk_list_box_Task_List.selection_set(Select_Target+1)
         self.ui.tk_list_box_Task_List.update()
 
     def Click_Delete_Button(self,evt):
@@ -199,7 +179,9 @@ class Controller:
         del MAA_Pi_Config["task"]
         MAA_Pi_Config.update({"task":Task_List})
         Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        self.ui.tk_list_box_Task_List.selection_set(Select_Target-1)
         self.ui.tk_list_box_Task_List.update()
+
     
     def Add_Task_Select_More_Select(self,evt):
         #不用了之后隐藏控件
