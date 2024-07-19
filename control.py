@@ -2,6 +2,10 @@ from ui import Win
 import subprocess
 import os
 from tool import *
+import requests
+from zipfile import ZipFile 
+import shutil
+from tkinter import messagebox  
 
 
 #获取初始resource序号
@@ -50,6 +54,10 @@ class Controller:
         self.ui = ui
         # TODO 组件初始化 赋值操作
         
+        #服务器资源 
+        self.ui.tk_select_box_Resource_Type_Select['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","resource"))
+        self.ui.tk_select_box_Add_Task_Select['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","task"))
+        self.ui.tk_select_box_Controller_Type_Select['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","controller"))
         #ADB地址和端口输入框
         self.ui.tk_input_ADB_Address_Input.insert(0,init_ADB_Address)
         self.ui.tk_input_ADB_Path_Input.insert(0,init_ADB_Path)
@@ -67,6 +75,11 @@ class Controller:
         self.ui.tk_label_Add_Task_Label_4.place_forget()
         self.ui.tk_label_Add_Task_Label_5.place_forget()
         self.ui.tk_label_Add_Task_Label_6.place_forget()
+
+        #隐藏下载进度条 进度显示 和版本显示
+        self.ui.tk_progressbar_ProgressBar.place_forget()
+        self.ui.tk_label_Stable.place_forget()
+        self.ui.tk_button_Update_button.place_forget()
 
     def Start_Task(self,evt):
         #使用-d参数打开MaaPiCli.exe
@@ -274,3 +287,51 @@ class Controller:
                     self.ui.tk_label_Add_Task_Label_4.update()
                     self.ui.tk_label_Add_Task_Label_5.update()
                     self.ui.tk_label_Add_Task_Label_6.update()
+    def Chack_Update(self,evt):
+
+        url = "https://api.github.com/repos/overflow65537/MAA_SnowBreak/releases/latest"
+        global Cont
+        Cont=requests.get(url).json()
+
+        #显示版本
+        self.ui.tk_label_Stable["text"] = Cont["tag_name"]
+        self.ui.tk_label_Stable.place(x=65, y=425, width=100, height=30)
+        self.ui.tk_label_Stable.update()
+
+        #显示进度条和更新按钮
+        self.ui.tk_button_Update_button.place(x=10, y=425, width=50, height=30)
+
+    def Update(self,evt):
+        #找出win-x86_64版本的下载地址
+        browser_download_url = []
+        for i in Cont["assets"]:
+            if i["name"] == "MSBA-win-x86_64-"+Cont["tag_name"]+".zip":
+                browser_download_url.append(i["browser_download_url"])
+        zip_url = browser_download_url[0]
+
+        # 检查MAA-bin文件夹是否存在，如果不存在则创建它  
+        maa_bin_dir = os.path.join(os.getcwd(), 'MAA_bin')  
+        if not os.path.exists(maa_bin_dir):  
+            os.makedirs(maa_bin_dir)  
+    
+        # 构建保存ZIP文件的路径  
+        zip_file_path = os.path.join(os.getcwd(), 'download.zip')  
+    
+        # 下载ZIP文件  
+        try:  
+            with requests.get(zip_url, stream=True) as r:  
+                r.raise_for_status()  # 如果响应状态码不是200，则抛出HTTPError异常  
+                with open(zip_file_path, 'wb') as f:  
+                    shutil.copyfileobj(r.raw, f)  
+            
+            # 解压ZIP文件到MAA-bin文件夹  
+            with ZipFile(zip_file_path, 'r') as zip_ref:  
+                zip_ref.extractall(maa_bin_dir)  
+    
+            # 可选：删除ZIP文件以节省空间  
+            os.remove(zip_file_path)  
+            messagebox.showinfo("成功", "文件已下载并解压到MAA-bin文件夹内！")  
+        except requests.exceptions.RequestException as e:  
+            messagebox.showerror("下载错误", str(e))  
+        except Exception as e:  
+            messagebox.showerror("错误", str(e))  
