@@ -9,7 +9,7 @@
 - ![image](https://github.com/overflow65537/Tkinter_MAA-GUI/blob/main/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/MAA_bin%E5%9B%BE%E7%89%87.png)
 - 返回MAA-GUI文件夹
 - 启动MAA-GUI.exe
-- 输入ADB端口和ADB地址并回车保存
+- 输入ADB端口和ADB地址并回车保存(无法输入小数点可以复制进去)
 - 输入任务
 - 开始运行
   
