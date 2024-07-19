@@ -1,6 +1,9 @@
 # costom
 /MAA_bin
 /json
+/zipfile
+/tkinter
+/requests
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -165,3 +168,5 @@ cython_debug/
 #.idea/
 subprocess.py
 os.py
+shutil.py
+config.json

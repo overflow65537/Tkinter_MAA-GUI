@@ -288,8 +288,9 @@ class Controller:
                     self.ui.tk_label_Add_Task_Label_5.update()
                     self.ui.tk_label_Add_Task_Label_6.update()
     def Chack_Update(self,evt):
-
-        url = "https://api.github.com/repos/overflow65537/MAA_SnowBreak/releases/latest"
+        with open(os.getcwd()+"/config.json","r",encoding='utf-8') as GUI_Config:
+            url =  json.load(GUI_Config)["url"]
+            
         global Cont
         Cont=requests.get(url).json()
 
