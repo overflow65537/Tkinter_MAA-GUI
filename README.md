@@ -12,7 +12,7 @@
 - 输入ADB端口和ADB地址并回车保存
 - 输入任务
 - 开始运行
-- 
+  
 # 自动更新使用方式
 - MAA-GUI.exe目录下创建config.json
 - 内容为```{"url":"https://api.github.com/repos/作者名/项目名/releases/latest"}```
