@@ -108,7 +108,7 @@ class Controller:
         Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
 
     def Save_Controller_Type_Select(self,evt):
-        #打开maa_pi_config.json并写入新的资源
+        #打开maa_pi_config.json并写入新的控制端
         Controller_Type_Select = self.ui.tk_select_box_Controller_Type_Select.get()
         MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
         MAA_Pi_Config["controller"] = Controller_Type_Select
@@ -150,10 +150,10 @@ class Controller:
         MAA_Pi_Config["task"].append({"name": task,"option": Option})
         Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
         #刷新GUI任务列表
-        self.ui.tk_list_box_Task_List.delete(0,100)
+        self.ui.tk_list_box_Task_List.delete(0,100)#为什么END用不了?那我直接选第100位,什么时候真有100个任务了我就写1000位
         for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
-        self.ui.tk_list_box_Task_List.update()
+
     
     def Click_Move_Up_Button(self,evt):
         #上移任务
@@ -167,7 +167,7 @@ class Controller:
         for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
         self.ui.tk_list_box_Task_List.selection_set(Select_Target-1)
-        self.ui.tk_list_box_Task_List.update()
+
 
     def Click_Move_Down_Button(self,evt):
         #下移任务
@@ -181,7 +181,7 @@ class Controller:
         for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
         self.ui.tk_list_box_Task_List.selection_set(Select_Target+1)
-        self.ui.tk_list_box_Task_List.update()
+
 
     def Click_Delete_Button(self,evt):
         #删除选定任务
@@ -194,100 +194,57 @@ class Controller:
         MAA_Pi_Config.update({"task":Task_List})
         Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
         self.ui.tk_list_box_Task_List.selection_set(Select_Target-1)
-        self.ui.tk_list_box_Task_List.update()
+
 
     
-    def Add_Task_Select_More_Select(self,evt):
-        #不用了之后隐藏控件
-        self.ui.tk_select_box_Add_Task_Select_1.place_forget()
-        self.ui.tk_select_box_Add_Task_Select_2.place_forget()
-        self.ui.tk_select_box_Add_Task_Select_3.place_forget()
-        self.ui.tk_select_box_Add_Task_Select_4.place_forget()
-        self.ui.tk_label_Add_Task_Label_3.place_forget()
-        self.ui.tk_label_Add_Task_Label_4.place_forget()
-        self.ui.tk_label_Add_Task_Label_5.place_forget()
-        self.ui.tk_label_Add_Task_Label_6.place_forget()
-        Select_Target = self.ui.tk_select_box_Add_Task_Select.get()
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")
-        #Option_list存放所有带有option的键值
-        Option_list = []
-        for i in MAA_Pi_Config["task"]:
-            #将所有带有option的键值存进Option_list
-            if i.get("option")!= None:
-                Option_list.append(i)
-        for i in Option_list:
-            #检查当前选中任务的是否为Option_list中的元素
-            if Select_Target == i["name"]:
-                #是的话通过检查interface.json中该任务任务中option列表的长度
-                l = len(i["option"])
-                
-                #根据list长度选择改显示几个任务option选项
-                if l == 1:
-                    #i["option"][0]为通过interface中task键下的option第0号键值,因为if判断这个option只有一个选项,所以不担心有别的内容不显示
-                    #任务数多于4个的话在ui.py添加控件,然后在此文件上方init隐藏,在通过这里来重新调用
-                    self.ui.tk_select_box_Add_Task_Select_1['values'] = tuple(Get_Task_List(i["option"][0]))
-                    self.ui.tk_select_box_Add_Task_Select_1.place(x=80, y=200, width=260, height=30)
-                    self.ui.tk_label_Add_Task_Label_3["text"] = i["option"][0]
-                    self.ui.tk_label_Add_Task_Label_3.place(x=0, y=200, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_3.update()
-                    self.ui.tk_select_box_Add_Task_Select_1.update() 
-                elif l == 2:
-                    self.ui.tk_select_box_Add_Task_Select_1['values'] = tuple(Get_Task_List(i["option"][0]))
-                    self.ui.tk_select_box_Add_Task_Select_2['values'] = tuple(Get_Task_List(i["option"][1]))
-                    self.ui.tk_select_box_Add_Task_Select_1.place(x=80, y=200, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_2.place(x=80, y=240, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_1.update()
-                    self.ui.tk_select_box_Add_Task_Select_2.update()
-                    self.ui.tk_label_Add_Task_Label_3["text"] = i["option"][0]
-                    self.ui.tk_label_Add_Task_Label_4["text"] = i["option"][1]
-                    self.ui.tk_label_Add_Task_Label_3.place(x=0, y=200, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_4.place(x=0, y=240, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_3.update()
-                    self.ui.tk_label_Add_Task_Label_4.update()
-                elif l == 3:
-                    self.ui.tk_select_box_Add_Task_Select_1['values'] = tuple(Get_Task_List(i["option"][0]))
-                    self.ui.tk_select_box_Add_Task_Select_2['values'] = tuple(Get_Task_List(i["option"][1]))
-                    self.ui.tk_select_box_Add_Task_Select_3['values'] = tuple(Get_Task_List(i["option"][2]))
-                    self.ui.tk_select_box_Add_Task_Select_1.place(x=80, y=200, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_2.place(x=80, y=240, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_3.place(x=80, y=280, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_1.update()
-                    self.ui.tk_select_box_Add_Task_Select_2.update()
-                    self.ui.tk_select_box_Add_Task_Select_3.update()
-                    self.ui.tk_label_Add_Task_Label_3["text"] = i["option"][0]
-                    self.ui.tk_label_Add_Task_Label_4["text"] = i["option"][1]
-                    self.ui.tk_label_Add_Task_Label_5["text"] = i["option"][2]
-                    self.ui.tk_label_Add_Task_Label_3.place(x=0, y=200, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_4.place(x=0, y=240, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_5.place(x=0, y=280, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_3.update()
-                    self.ui.tk_label_Add_Task_Label_4.update()
-                    self.ui.tk_label_Add_Task_Label_5.update()
-                elif l == 4:
-                    self.ui.tk_select_box_Add_Task_Select_1['values'] = tuple(Get_Task_List(i["option"][0]))
-                    self.ui.tk_select_box_Add_Task_Select_2['values'] = tuple(Get_Task_List(i["option"][1]))
-                    self.ui.tk_select_box_Add_Task_Select_3['values'] = tuple(Get_Task_List(i["option"][2]))
-                    self.ui.tk_select_box_Add_Task_Select_4['values'] = tuple(Get_Task_List(i["option"][3]))
-                    self.ui.tk_select_box_Add_Task_Select_1.place(x=80, y=200, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_2.place(x=80, y=240, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_3.place(x=80, y=280, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_4.place(x=80, y=320, width=260, height=30)
-                    self.ui.tk_select_box_Add_Task_Select_1.update()
-                    self.ui.tk_select_box_Add_Task_Select_2.update()
-                    self.ui.tk_select_box_Add_Task_Select_3.update()
-                    self.ui.tk_select_box_Add_Task_Select_4.update()
-                    self.ui.tk_label_Add_Task_Label_3["text"] = i["option"][0]
-                    self.ui.tk_label_Add_Task_Label_4["text"] = i["option"][1]
-                    self.ui.tk_label_Add_Task_Label_5["text"] = i["option"][2]
-                    self.ui.tk_label_Add_Task_Label_6["text"] = i["option"][3]
-                    self.ui.tk_label_Add_Task_Label_3.place(x=0, y=200, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_4.place(x=0, y=240, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_5.place(x=0, y=280, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_6.place(x=0, y=320, width=70, height=30)
-                    self.ui.tk_label_Add_Task_Label_3.update()
-                    self.ui.tk_label_Add_Task_Label_4.update()
-                    self.ui.tk_label_Add_Task_Label_5.update()
-                    self.ui.tk_label_Add_Task_Label_6.update()
+    def Add_Task_Select_More_Select(self, evt):  
+        # 清除所有额外显示的下拉框和标签  
+        self.clear_extra_widgets()  
+    
+        # 获取选中的任务  
+        select_target = self.ui.tk_select_box_Add_Task_Select.get()  
+    
+        # 使用after()方法延迟执行  
+        def delayed_update():  
+            MAA_Pi_Config = Read_MAA_Config(os.getcwd() + "\MAA_bin\interface.json")  
+    
+            # 查找是否有选中的任务并包含option  
+            for task in MAA_Pi_Config["task"]:  
+                if task["name"] == select_target and task.get("option") is not None:  
+                    option_length = len(task["option"])  
+    
+                    # 根据option数量动态显示下拉框和标签  
+                    for i in range(option_length):  
+                        select_box = getattr(self.ui, f'tk_select_box_Add_Task_Select_{i+1}')  
+                        label = getattr(self.ui, f'tk_label_Add_Task_Label_{i+3}')  
+                        option_name = task["option"][i]
+    
+                        # 填充下拉框数据  
+                        select_box['values'] = tuple(Get_Task_List(option_name))  
+                        select_box.place(x=80, y=200 + (i * 40), width=260, height=30)  
+    
+                        # 显示标签  
+                        label["text"] = option_name  
+                        label.place(x=0, y=200 + (i * 40), width=70, height=30)  
+    
+                        # 更新widget  
+                        select_box.update()  
+                        label.update()  
+    
+                    break  # 找到匹配的任务后退出循环  
+    
+        # 使用after()方法延迟200毫秒执行  
+        self.ui.after(100, delayed_update)  
+    
+    def clear_extra_widgets(self):  
+        # 隐藏并清除所有额外的下拉框和标签的选项  
+        for i in range(1, 5): 
+            select_box = getattr(self.ui, f'tk_select_box_Add_Task_Select_{i}')  
+            select_box['values'] = ()  # 清除选项  
+            select_box.place_forget()  # 隐藏下拉框  
+            
+            label = getattr(self.ui, f'tk_label_Add_Task_Label_{i+2}')  
+            label.place_forget()  # 隐藏标签
     def Check_Update(self, evt):  
         # 使用threading启动一个新线程来执行检查更新操作  
         threading.Thread(target=self._check_update_thread_function, daemon=True).start()
@@ -338,7 +295,7 @@ class Controller:
             with ZipFile(zip_file_path, 'r') as zip_ref:  
                 zip_ref.extractall(maa_bin_dir)  
     
-            # 可选：删除ZIP文件以节省空间  
+            #删除ZIP文件
             os.remove(zip_file_path)  
             messagebox.showinfo("成功", "文件已下载并解压到MAA-bin文件夹内！")  
         except requests.exceptions.RequestException as e:  
