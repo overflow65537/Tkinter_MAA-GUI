@@ -6,6 +6,7 @@ import requests
 from zipfile import ZipFile 
 import shutil
 from tkinter import messagebox  
+import threading
 
 
 #获取初始resource序号
@@ -108,9 +109,9 @@ class Controller:
 
     def Save_Controller_Type_Select(self,evt):
         #打开maa_pi_config.json并写入新的资源
-        Resource_Type_Select = self.ui.tk_select_box_Resource_Type_Select.get()
+        Controller_Type_Select = self.ui.tk_select_box_Controller_Type_Select.get()
         MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
-        MAA_Pi_Config["controller"] = Resource_Type_Select
+        MAA_Pi_Config["controller"] = Controller_Type_Select
         Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
 
     def Add_Task(self,evt):
@@ -287,7 +288,11 @@ class Controller:
                     self.ui.tk_label_Add_Task_Label_4.update()
                     self.ui.tk_label_Add_Task_Label_5.update()
                     self.ui.tk_label_Add_Task_Label_6.update()
-    def Chack_Update(self,evt):
+    def Check_Update(self, evt):  
+        # 使用threading启动一个新线程来执行检查更新操作  
+        threading.Thread(target=self._check_update_thread_function, daemon=True).start()
+    
+    def _check_update_thread_function(self):
         with open(os.getcwd()+"/config.json","r",encoding='utf-8') as GUI_Config:
             url =  json.load(GUI_Config)["url"]
             
@@ -302,7 +307,11 @@ class Controller:
         #显示进度条和更新按钮
         self.ui.tk_button_Update_button.place(x=10, y=425, width=50, height=30)
 
-    def Update(self,evt):
+    def Update(self, evt):  
+        # 使用threading启动一个新线程来执行更新操作  
+        threading.Thread(target=self._update_thread_function, daemon=True).start()
+
+    def _update_thread_function(self):
         #找出win-x86_64版本的下载地址
         browser_download_url = []
         for i in Cont["assets"]:
@@ -336,3 +345,4 @@ class Controller:
             messagebox.showerror("下载错误", str(e))  
         except Exception as e:  
             messagebox.showerror("错误", str(e))  
+    

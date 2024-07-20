@@ -38,7 +38,7 @@ class WinGUI(Tk):
         self.tk_select_box_Controller_Type_Select = self.__tk_select_box_Controller_Type_Select(self)
         self.tk_progressbar_ProgressBar = self.__tk_progressbar_ProgressBar(self)
         self.tk_label_Stable = self.__tk_label_Stable(self)
-        self.tk_button_Chack_Update_Button = self.__tk_button_Chack_Update_Button(self)
+        self.tk_button_Check_Update_Button = self.__tk_button_Check_Update_Button(self)
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
@@ -218,7 +218,7 @@ class WinGUI(Tk):
         label = Label(parent,text="标签",anchor="center", )
         label.place(x=145, y=400, width=40, height=30)
         return label
-    def __tk_button_Chack_Update_Button(self,parent):
+    def __tk_button_Check_Update_Button(self,parent):
         btn = Button(parent, text="检查", takefocus=False,)
         btn.place(x=10, y=460, width=50, height=30)
         return btn
@@ -246,7 +246,7 @@ class Win(WinGUI):
         self.tk_button_Update_button.bind('<Button-1>',self.ctl.Update)
         self.tk_select_box_Resource_Type_Select.bind('<Button-1>',self.ctl.Save_ADB_Path)
         self.tk_select_box_Add_Task_Select.bind('<Enter>',self.ctl.Save_ADB_Address)
-        self.tk_button_Chack_Update_Button.bind('<Button-1>',self.ctl.Chack_Update)
+        self.tk_button_Check_Update_Button.bind('<Button-1>',self.ctl.Check_Update)
         self.tk_select_box_Controller_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Controller_Type_Select)
 if __name__ == "__main__":
     win = WinGUI()
