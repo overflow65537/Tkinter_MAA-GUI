@@ -78,8 +78,8 @@ class Controller:
         self.ui.tk_label_Add_Task_Label_6.place_forget()
 
         #隐藏下载进度条 进度显示 和版本显示
+        self.ui.tk_label_Stable_online.place_forget()
         self.ui.tk_progressbar_ProgressBar.place_forget()
-        self.ui.tk_label_Stable.place_forget()
         self.ui.tk_button_Update_button.place_forget()
 
     def Start_Task(self,evt):
@@ -221,7 +221,7 @@ class Controller:
     
                         # 填充下拉框数据  
                         select_box['values'] = tuple(Get_Task_List(option_name))  
-                        select_box.place(x=80, y=200 + (i * 40), width=260, height=30)  
+                        select_box.place(x=80, y=200 + (i * 40), width=180, height=30)  
     
                         # 显示标签  
                         label["text"] = option_name  
@@ -255,14 +255,13 @@ class Controller:
             
         global Cont
         Cont=requests.get(url).json()
-
         #显示版本
-        self.ui.tk_label_Stable["text"] = Cont["tag_name"]
-        self.ui.tk_label_Stable.place(x=65, y=425, width=100, height=30)
-        self.ui.tk_label_Stable.update()
+        self.ui.tk_label_Stable_online.place(x=205, y=420, width=130, height=30)
+        self.ui.tk_label_Stable_online["text"] = "最新版本"+Cont["tag_name"]
+        self.ui.tk_label_Stable_online.update()
 
         #显示进度条和更新按钮
-        self.ui.tk_button_Update_button.place(x=10, y=425, width=50, height=30)
+        self.ui.tk_button_Update_button.place(x=0, y=385, width=50, height=30)
 
     def Update(self, evt):  
         # 使用threading启动一个新线程来执行更新操作  
@@ -275,6 +274,24 @@ class Controller:
             if i["name"] == "MSBA-win-x86_64-"+Cont["tag_name"]+".zip":
                 browser_download_url.append(i["browser_download_url"])
         zip_url = browser_download_url[0]
+                # 读取config.json中的当前tag_name  
+        try:  
+            with open(os.getcwd()+"/config.json", "r", encoding='utf-8') as config_file:  
+                config_data = json.load(config_file)  
+                current_tag_name = config_data.get("tag_name", "")  
+        except Exception as e:  
+            print(f"Error reading config.json: {e}")  
+            current_tag_name = ""  
+  
+        # 获取最新的tag_name  
+        new_tag_name = Cont["tag_name"]
+  
+        # 比较新旧tag_name，并更新UI和config.json（如果需要）  
+        if new_tag_name != current_tag_name:  
+            # 更新config.json  
+            config_data["tag_name"] = new_tag_name  
+            with open(os.getcwd()+"/config.json", "w", encoding='utf-8') as config_file:  
+                json.dump(config_data, config_file, indent=4, ensure_ascii=False)  
 
         # 检查MAA-bin文件夹是否存在，如果不存在则创建它  
         maa_bin_dir = os.path.join(os.getcwd(), 'MAA_bin')  

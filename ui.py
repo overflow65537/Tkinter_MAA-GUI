@@ -37,13 +37,14 @@ class WinGUI(Tk):
         self.tk_label_Controller_Type_Label = self.__tk_label_Controller_Type_Label(self)
         self.tk_select_box_Controller_Type_Select = self.__tk_select_box_Controller_Type_Select(self)
         self.tk_progressbar_ProgressBar = self.__tk_progressbar_ProgressBar(self)
-        self.tk_label_Stable = self.__tk_label_Stable(self)
+        self.tk_label_Stable_loca = self.__tk_label_Stable_loca(self)
+        self.tk_label_Stable_online = self.__tk_label_Stable_online(self)
         self.tk_button_Check_Update_Button = self.__tk_button_Check_Update_Button(self)
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
         width = 600
-        height = 500
+        height = 450
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
         geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
@@ -86,7 +87,7 @@ class WinGUI(Tk):
         self.scrollbar_autohide(vbar, hbar, widget)
     def __tk_button_Start_Task(self,parent):
         btn = Button(parent, text="开始任务", takefocus=False,)
-        btn.place(x=200, y=460, width=70, height=30)
+        btn.place(x=270, y=320, width=70, height=30)
         return btn
     def __tk_label_ADB_Part_Label(self,parent):
         label = Label(parent,text="ADB路径",anchor="center", )
@@ -124,11 +125,11 @@ class WinGUI(Tk):
     def __tk_select_box_Add_Task_Select(self,parent):
         cb = Combobox(parent, state="readonly", )
         cb['values'] = ()
-        cb.place(x=80, y=160, width=260, height=30)
+        cb.place(x=80, y=160, width=180, height=30)
         return cb
     def __tk_button_Add_Task_Button(self,parent):
         btn = Button(parent, text="添加任务", takefocus=False,)
-        btn.place(x=80, y=460, width=70, height=30)
+        btn.place(x=270, y=160, width=70, height=30)
         return btn
     def __tk_label_Task_List_Label(self,parent):
         label = Label(parent,text="任务列表",anchor="center", )
@@ -152,35 +153,35 @@ class WinGUI(Tk):
         return cb
     def __tk_button_Move_Up_Button(self,parent):
         btn = Button(parent, text="上移", takefocus=False,)
-        btn.place(x=360, y=460, width=50, height=30)
+        btn.place(x=270, y=200, width=70, height=30)
         return btn
     def __tk_button_Move_Down_Button(self,parent):
         btn = Button(parent, text="下移", takefocus=False,)
-        btn.place(x=445, y=460, width=50, height=30)
+        btn.place(x=270, y=240, width=70, height=30)
         return btn
     def __tk_button_Delete_Button(self,parent):
         btn = Button(parent, text="删除", takefocus=False,)
-        btn.place(x=530, y=460, width=50, height=30)
+        btn.place(x=270, y=280, width=70, height=30)
         return btn
     def __tk_select_box_Add_Task_Select_1(self,parent):
         cb = Combobox(parent, state="readonly", )
         cb['values'] = ("1号选项")
-        cb.place(x=80, y=200, width=260, height=30)
+        cb.place(x=80, y=200, width=180, height=30)
         return cb
     def __tk_select_box_Add_Task_Select_2(self,parent):
         cb = Combobox(parent, state="readonly", )
         cb['values'] = ("2号选项")
-        cb.place(x=80, y=240, width=260, height=30)
+        cb.place(x=80, y=240, width=180, height=30)
         return cb
     def __tk_select_box_Add_Task_Select_3(self,parent):
         cb = Combobox(parent, state="readonly", )
         cb['values'] = ("3号选项")
-        cb.place(x=80, y=280, width=260, height=30)
+        cb.place(x=80, y=280, width=180, height=30)
         return cb
     def __tk_select_box_Add_Task_Select_4(self,parent):
         cb = Combobox(parent, state="readonly", )
         cb['values'] = ("4号选项")
-        cb.place(x=80, y=320, width=260, height=30)
+        cb.place(x=80, y=320, width=180, height=30)
         return cb
     def __tk_label_Add_Task_Label_3(self,parent):
         label = Label(parent,text="1号标签",anchor="center", )
@@ -202,25 +203,31 @@ class WinGUI(Tk):
         label = Label(parent,text="控制端",anchor="center", )
         label.place(x=180, y=80, width=70, height=30)
         return label
-    def __tk_label_Controller_Type_Label(self,parent):
-        label = Label(parent,text="控制端",anchor="center", )
-        label.place(x=180, y=80, width=70, height=30)
-        return label
     def __tk_button_Update_button(self,parent):
         btn = Button(parent, text="更新", takefocus=False,)
-        btn.place(x=290, y=400, width=50, height=30)
         return btn
     def __tk_progressbar_ProgressBar(self,parent):
         progressbar = Progressbar(parent, orient=HORIZONTAL,)
-        progressbar.place(x=0, y=400, width=130, height=30)
+        progressbar.place(x=60, y=385, width=275, height=30)
         return progressbar
-    def __tk_label_Stable(self,parent):
+    def __tk_label_Stable_loca(self,parent):
+        try:  
+            with open(os.getcwd()+"/config.json", "r", encoding='utf-8') as config_file:  
+                config_data = json.load(config_file)  
+                current_tag_name = config_data["tag_name"]
+        except Exception as e:
+            print(e)
+            current_tag_name = ""  
+        label = Label(parent,text="当前版本:"+current_tag_name,anchor="center", )
+        label.place(x=60, y=420, width=130, height=30)
+        return label
+    def __tk_label_Stable_online(self,parent):
         label = Label(parent,text="标签",anchor="center", )
-        label.place(x=145, y=400, width=40, height=30)
+        label.place(x=205, y=420, width=130, height=30)
         return label
     def __tk_button_Check_Update_Button(self,parent):
         btn = Button(parent, text="检查", takefocus=False,)
-        btn.place(x=10, y=460, width=50, height=30)
+        btn.place(x=0, y=420, width=50, height=30)
         return btn
 class Win(WinGUI):
     def __init__(self, controller):
