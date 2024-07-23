@@ -72,14 +72,13 @@ class Controller:
         self.ui.tk_select_box_Add_Task_Select_2.place_forget()
         self.ui.tk_select_box_Add_Task_Select_3.place_forget()
         self.ui.tk_select_box_Add_Task_Select_4.place_forget()
+        self.ui.tk_label_Add_Task_Label_1.place_forget()
+        self.ui.tk_label_Add_Task_Label_2.place_forget()
         self.ui.tk_label_Add_Task_Label_3.place_forget()
         self.ui.tk_label_Add_Task_Label_4.place_forget()
-        self.ui.tk_label_Add_Task_Label_5.place_forget()
-        self.ui.tk_label_Add_Task_Label_6.place_forget()
 
         #隐藏下载进度条 进度显示 和版本显示
         self.ui.tk_label_Stable_online.place_forget()
-        self.ui.tk_progressbar_ProgressBar.place_forget()
         self.ui.tk_button_Update_button.place_forget()
 
     def Start_Task(self,evt):
@@ -128,24 +127,16 @@ class Controller:
             if i.get("option")!= None:
                 Option_list.append(i)
         for i in Option_list:
-            #检查当前选中任务的是否为Option_list中的元素
-            if Select_Target == i["name"]:
-                #是的话通过检查interface.json中该任务任务中option列表的长度
-                l = len(i["option"])
-                if l == 1:
-                    Option.append({"name":i["option"][0],"value":self.ui.tk_select_box_Add_Task_Select_1.get()})
-                elif l == 2:
-                    Option.append({"name":i["option"][0],"value":self.ui.tk_select_box_Add_Task_Select_1.get()})
-                    Option.append({"name":i["option"][1],"value":self.ui.tk_select_box_Add_Task_Select_2.get()})
-                elif l == 3:
-                    Option.append({"name":i["option"][0],"value":self.ui.tk_select_box_Add_Task_Select_1.get()})
-                    Option.append({"name":i["option"][1],"value":self.ui.tk_select_box_Add_Task_Select_2.get()})
-                    Option.append({"name":i["option"][2],"value":self.ui.tk_select_box_Add_Task_Select_3.get()})
-                elif l == 4:
-                    Option.append({"name":i["option"][0],"value":self.ui.tk_select_box_Add_Task_Select_1.get()})
-                    Option.append({"name":i["option"][1],"value":self.ui.tk_select_box_Add_Task_Select_2.get()})
-                    Option.append({"name":i["option"][2],"value":self.ui.tk_select_box_Add_Task_Select_3.get()})
-                    Option.append({"name":i["option"][3],"value":self.ui.tk_select_box_Add_Task_Select_4.get()})
+            #检查当前选中任务的是否为option_list中的元素
+            if Select_Target == i["name"]:  
+                l = len(i["option"])  
+                options_dicts = []  
+                # 根据option的长度，循环添加选项到列表中  
+                for index in range(l):  
+                    select_box_name = f"tk_select_box_Add_Task_Select_{index + 1}"  
+                    selected_value = getattr(self.ui, select_box_name).get()  
+                    options_dicts.append({"name": i["option"][index], "value": selected_value})  
+                Option.extend(options_dicts)
         MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
         MAA_Pi_Config["task"].append({"name": task,"option": Option})
         Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
@@ -216,34 +207,33 @@ class Controller:
                     # 根据option数量动态显示下拉框和标签  
                     for i in range(option_length):  
                         select_box = getattr(self.ui, f'tk_select_box_Add_Task_Select_{i+1}')  
-                        label = getattr(self.ui, f'tk_label_Add_Task_Label_{i+3}')  
+                        label = getattr(self.ui, f'tk_label_Add_Task_Label_{i+1}')  
                         option_name = task["option"][i]
     
                         # 填充下拉框数据  
                         select_box['values'] = tuple(Get_Task_List(option_name))  
-                        select_box.place(x=80, y=200 + (i * 40), width=180, height=30)  
+                        select_box.place(x=80, y=40 + (i * 40), width=150, height=30)  
     
                         # 显示标签  
                         label["text"] = option_name  
-                        label.place(x=0, y=200 + (i * 40), width=70, height=30)  
+                        label.place(x=0, y=40 + (i * 40), width=70, height=30)  
     
-                        # 更新widget  
+                        # 刷新GUI
                         select_box.update()  
                         label.update()  
     
                     break  # 找到匹配的任务后退出循环  
     
-        # 使用after()方法延迟200毫秒执行  
         self.ui.after(100, delayed_update)  
     
     def clear_extra_widgets(self):  
         # 隐藏并清除所有额外的下拉框和标签的选项  
         for i in range(1, 5): 
             select_box = getattr(self.ui, f'tk_select_box_Add_Task_Select_{i}')  
-            select_box['values'] = ()  # 清除选项  
+            select_box.set(" ")  # 清除选项
             select_box.place_forget()  # 隐藏下拉框  
             
-            label = getattr(self.ui, f'tk_label_Add_Task_Label_{i+2}')  
+            label = getattr(self.ui, f'tk_label_Add_Task_Label_{i}')  
             label.place_forget()  # 隐藏标签
     def Check_Update(self, evt):  
         # 使用threading启动一个新线程来执行检查更新操作  
@@ -256,12 +246,12 @@ class Controller:
         global Cont
         Cont=requests.get(url).json()
         #显示版本
-        self.ui.tk_label_Stable_online.place(x=205, y=420, width=130, height=30)
+        self.ui.tk_label_Stable_online.place(x=200, y=400, width=130, height=30)
         self.ui.tk_label_Stable_online["text"] = "最新版本"+Cont["tag_name"]
         self.ui.tk_label_Stable_online.update()
 
         #显示进度条和更新按钮
-        self.ui.tk_button_Update_button.place(x=0, y=385, width=50, height=30)
+        self.ui.tk_button_Update_button.place(x=0, y=380, width=50, height=30)
 
     def Update(self, evt):  
         # 使用threading启动一个新线程来执行更新操作  
@@ -319,4 +309,5 @@ class Controller:
             messagebox.showerror("下载错误", str(e))  
         except Exception as e:  
             messagebox.showerror("错误", str(e))  
-    
+    def Click_Auto_Detect_ADB(self):
+        pass

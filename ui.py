@@ -2,49 +2,59 @@ from tool import *
 from tkinter import *
 from tkinter.ttk import *
 
-
 class WinGUI(Tk):
     def __init__(self):
         super().__init__()
         self.__win()
-        self.tk_button_Start_Task = self.__tk_button_Start_Task(self)
-        self.tk_label_ADB_Part_Label = self.__tk_label_ADB_Part_Label(self)
-        self.tk_label_ADB_Address_Label = self.__tk_label_ADB_Address_Label(self)
-        self.tk_label_Resource_Type_Label = self.__tk_label_Resource_Type_Label(self)
-        self.tk_label_Add_Task_Label = self.__tk_label_Add_Task_Label(self)
-        self.tk_label_Add_Task_Label_2 = self.__tk_label_Add_Task_Label_2(self)
-        self.tk_input_ADB_Path_Input = self.__tk_input_ADB_Path_Input(self)
-        self.tk_input_ADB_Address_Input = self.__tk_input_ADB_Address_Input(self)
-        self.tk_select_box_Resource_Type_Select = self.__tk_select_box_Resource_Type_Select(self)
-        self.tk_select_box_Add_Task_Select = self.__tk_select_box_Add_Task_Select(self)
-        self.tk_button_Add_Task_Button = self.__tk_button_Add_Task_Button(self)
-        self.tk_label_Task_List_Label = self.__tk_label_Task_List_Label(self)
-        self.tk_list_box_Task_List = self.__tk_list_box_Task_List(self)
-        self.tk_button_Move_Up_Button = self.__tk_button_Move_Up_Button(self)
-        self.tk_button_Move_Down_Button = self.__tk_button_Move_Down_Button(self)
-        self.tk_button_Delete_Button = self.__tk_button_Delete_Button(self)
-        self.tk_select_box_Add_Task_Select_1 = self.__tk_select_box_Add_Task_Select_1(self)
-        self.tk_select_box_Add_Task_Select_2 = self.__tk_select_box_Add_Task_Select_2(self)
-        self.tk_select_box_Add_Task_Select_3 = self.__tk_select_box_Add_Task_Select_3(self)
-        self.tk_select_box_Add_Task_Select_4 = self.__tk_select_box_Add_Task_Select_4(self)
-        self.tk_label_Add_Task_Label_3 = self.__tk_label_Add_Task_Label_3(self)
-        self.tk_label_Add_Task_Label_4 = self.__tk_label_Add_Task_Label_4(self)
-        self.tk_label_Add_Task_Label_5 = self.__tk_label_Add_Task_Label_5(self)
-        self.tk_label_Add_Task_Label_6 = self.__tk_label_Add_Task_Label_6(self)
-        self.tk_label_Controller_Type_Label = self.__tk_label_Controller_Type_Label(self)
-        self.tk_select_box_Controller_Type_Select = self.__tk_select_box_Controller_Type_Select(self)
-        self.tk_button_Update_button = self.__tk_button_Update_button(self)
-        self.tk_label_Controller_Type_Label = self.__tk_label_Controller_Type_Label(self)
-        self.tk_select_box_Controller_Type_Select = self.__tk_select_box_Controller_Type_Select(self)
-        self.tk_progressbar_ProgressBar = self.__tk_progressbar_ProgressBar(self)
-        self.tk_label_Stable_loca = self.__tk_label_Stable_loca(self)
-        self.tk_label_Stable_online = self.__tk_label_Stable_online(self)
-        self.tk_button_Check_Update_Button = self.__tk_button_Check_Update_Button(self)
+        self.tk_tabs_Main_Tabs = self.__tk_tabs_Main_Tabs(self)
+        self.tk_label_Stable_loca = self.__tk_label_Stable_loca( self.tk_tabs_Main_Tabs_1)
+        self.tk_button_Check_Update_Button = self.__tk_button_Check_Update_Button( self.tk_tabs_Main_Tabs_1)
+        self.tk_label_Stable_online = self.__tk_label_Stable_online( self.tk_tabs_Main_Tabs_1)
+        self.tk_button_Update_button = self.__tk_button_Update_button( self.tk_tabs_Main_Tabs_1)
+        self.tk_select_box_Config_Select = self.__tk_select_box_Config_Select( self.tk_tabs_Main_Tabs_2)
+        self.tk_label_frame_ADB_Setting_Frame = self.__tk_label_frame_ADB_Setting_Frame( self.tk_tabs_Main_Tabs_1)
+        self.tk_label_ADB_Part_Label = self.__tk_label_ADB_Part_Label( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_ADB_Address_Label = self.__tk_label_ADB_Address_Label( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_button_Auto_Detect_ADB_Button = self.__tk_button_Auto_Detect_ADB_Button( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_input_ADB_Address_Input = self.__tk_input_ADB_Address_Input( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_input_ADB_Path_Input = self.__tk_input_ADB_Path_Input( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_select_box_Auto_Detect_ADB_Select = self.__tk_select_box_Auto_Detect_ADB_Select( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_Controller_Type_Label = self.__tk_label_Controller_Type_Label( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_Resource_Type_Label = self.__tk_label_Resource_Type_Label( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_select_box_Controller_Type_Select = self.__tk_select_box_Controller_Type_Select( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_select_box_Resource_Type_Select = self.__tk_select_box_Resource_Type_Select( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_StartApp = self.__tk_label_StartApp( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_input_StartAPP_Address = self.__tk_input_StartAPP_Address( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_input_StartAPP_Address_P = self.__tk_input_StartAPP_Address_P( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_StartAPP_P = self.__tk_label_StartAPP_P( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_Tips_Setting = self.__tk_label_Tips_Setting( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_label_frame_Task_List_Frame = self.__tk_label_frame_Task_List_Frame( self.tk_tabs_Main_Tabs_0)
+        self.tk_list_box_Task_List = self.__tk_list_box_Task_List( self.tk_label_frame_Task_List_Frame) 
+        self.tk_label_frame_Select_Task_Frame = self.__tk_label_frame_Select_Task_Frame( self.tk_tabs_Main_Tabs_0)
+        self.tk_label_Add_Task_Label_1 = self.__tk_label_Add_Task_Label_1( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_label_Add_Task_Label_3 = self.__tk_label_Add_Task_Label_3( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_label_Add_Task_Label_2 = self.__tk_label_Add_Task_Label_2( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_select_box_Add_Task_Select = self.__tk_select_box_Add_Task_Select( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_select_box_Add_Task_Select_2 = self.__tk_select_box_Add_Task_Select_2( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_select_box_Add_Task_Select_1 = self.__tk_select_box_Add_Task_Select_1( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_select_box_Add_Task_Select_3 = self.__tk_select_box_Add_Task_Select_3( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_select_box_Add_Task_Select_4 = self.__tk_select_box_Add_Task_Select_4( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_label_Add_Task_Label_4 = self.__tk_label_Add_Task_Label_4( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_label_Add_Task_Label = self.__tk_label_Add_Task_Label( self.tk_label_frame_Select_Task_Frame) 
+        self.tk_frame_Button_Frame = self.__tk_frame_Button_Frame( self.tk_tabs_Main_Tabs_0)
+        self.tk_button_Delete_Button = self.__tk_button_Delete_Button( self.tk_frame_Button_Frame) 
+        self.tk_button_Move_Down_Button = self.__tk_button_Move_Down_Button( self.tk_frame_Button_Frame) 
+        self.tk_button_Start_Task = self.__tk_button_Start_Task( self.tk_frame_Button_Frame) 
+        self.tk_button_Add_Task_Button = self.__tk_button_Add_Task_Button( self.tk_frame_Button_Frame) 
+        self.tk_button_Move_Up_Button = self.__tk_button_Move_Up_Button( self.tk_frame_Button_Frame) 
+        self.tk_label_Config_Label = self.__tk_label_Config_Label( self.tk_tabs_Main_Tabs_2)
+        self.tk_label_frame_Output_Frame = self.__tk_label_frame_Output_Frame(self)
+        self.tk_text_Output_Text = self.__tk_text_Output_Text( self.tk_label_frame_Output_Frame) 
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
-        width = 600
-        height = 450
+        width = 630
+        height = 600
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
         geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
@@ -85,131 +95,29 @@ class WinGUI(Tk):
             hbar = Scrollbar(master, orient="horizontal")
             self.h_scrollbar(hbar, widget, x, y, w, h, pw, ph)
         self.scrollbar_autohide(vbar, hbar, widget)
-    def __tk_button_Start_Task(self,parent):
-        btn = Button(parent, text="开始任务", takefocus=False,)
-        btn.place(x=270, y=320, width=70, height=30)
-        return btn
-    def __tk_label_ADB_Part_Label(self,parent):
-        label = Label(parent,text="ADB路径",anchor="center", )
-        label.place(x=0, y=0, width=70, height=30)
-        return label
-    def __tk_label_ADB_Address_Label(self,parent):
-        label = Label(parent,text="ADB端口",anchor="center", )
-        label.place(x=0, y=40, width=70, height=30)
-        return label
-    def __tk_label_Resource_Type_Label(self,parent):
-        label = Label(parent,text="客户端",anchor="center", )
-        label.place(x=0, y=80, width=70, height=30)
-        return label
-    def __tk_label_Add_Task_Label(self,parent):
-        label = Label(parent,text="添加任务",anchor="center", )
-        label.place(x=0, y=120, width=340, height=30)
-        return label
-    def __tk_label_Add_Task_Label_2(self,parent):
-        label = Label(parent,text="任务类型",anchor="center", )
-        label.place(x=0, y=160, width=70, height=30)
-        return label
-    def __tk_input_ADB_Path_Input(self,parent):
-        ipt = Entry(parent, )
-        ipt.place(x=80, y=0, width=260, height=30)
-        return ipt
-    def __tk_input_ADB_Address_Input(self,parent):
-        ipt = Entry(parent, )
-        ipt.place(x=80, y=40, width=260, height=30)
-        return ipt
-    def __tk_select_box_Resource_Type_Select(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ()
-        cb.place(x=80, y=80, width=140, height=30)
-        return cb
-    def __tk_select_box_Add_Task_Select(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ()
-        cb.place(x=80, y=160, width=180, height=30)
-        return cb
-    def __tk_button_Add_Task_Button(self,parent):
-        btn = Button(parent, text="添加任务", takefocus=False,)
-        btn.place(x=270, y=160, width=70, height=30)
-        return btn
-    def __tk_label_Task_List_Label(self,parent):
-        label = Label(parent,text="任务列表",anchor="center", )
-        label.place(x=380, y=0, width=180, height=30)
-        return label
-    def __tk_list_box_Task_List(self,parent):
-        lb = Listbox(parent)
-        for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
-            lb.insert(END, item)
-        lb.place(x=360, y=40, width=220, height=400)
-        return lb
-    def __tk_select_box_Controller_Type_Select(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ()
-        cb.place(x=260, y=80, width=80, height=30)
-        return cb
-    def __tk_select_box_Controller_Type_Select(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ()
-        cb.place(x=260, y=80, width=80, height=30)
-        return cb
-    def __tk_button_Move_Up_Button(self,parent):
-        btn = Button(parent, text="上移", takefocus=False,)
-        btn.place(x=270, y=200, width=70, height=30)
-        return btn
-    def __tk_button_Move_Down_Button(self,parent):
-        btn = Button(parent, text="下移", takefocus=False,)
-        btn.place(x=270, y=240, width=70, height=30)
-        return btn
-    def __tk_button_Delete_Button(self,parent):
-        btn = Button(parent, text="删除", takefocus=False,)
-        btn.place(x=270, y=280, width=70, height=30)
-        return btn
-    def __tk_select_box_Add_Task_Select_1(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("1号选项")
-        cb.place(x=80, y=200, width=180, height=30)
-        return cb
-    def __tk_select_box_Add_Task_Select_2(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("2号选项")
-        cb.place(x=80, y=240, width=180, height=30)
-        return cb
-    def __tk_select_box_Add_Task_Select_3(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("3号选项")
-        cb.place(x=80, y=280, width=180, height=30)
-        return cb
-    def __tk_select_box_Add_Task_Select_4(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("4号选项")
-        cb.place(x=80, y=320, width=180, height=30)
-        return cb
-    def __tk_label_Add_Task_Label_3(self,parent):
-        label = Label(parent,text="1号标签",anchor="center", )
-        label.place(x=0, y=200, width=70, height=30)
-        return label
-    def __tk_label_Add_Task_Label_4(self,parent):
-        label = Label(parent,text="2号标签",anchor="center", )
-        label.place(x=0, y=240, width=70, height=30)
-        return label
-    def __tk_label_Add_Task_Label_5(self,parent):
-        label = Label(parent,text="3号标签",anchor="center", )
-        label.place(x=0, y=280, width=70, height=30)
-        return label
-    def __tk_label_Add_Task_Label_6(self,parent):
-        label = Label(parent,text="4号标签",anchor="center", )
-        label.place(x=0, y=320, width=70, height=30)
-        return label
-    def __tk_label_Controller_Type_Label(self,parent):
-        label = Label(parent,text="控制端",anchor="center", )
-        label.place(x=180, y=80, width=70, height=30)
-        return label
-    def __tk_button_Update_button(self,parent):
-        btn = Button(parent, text="更新", takefocus=False,)
-        return btn
-    def __tk_progressbar_ProgressBar(self,parent):
-        progressbar = Progressbar(parent, orient=HORIZONTAL,)
-        progressbar.place(x=60, y=385, width=275, height=30)
-        return progressbar
+    def __tk_tabs_Main_Tabs(self,parent):
+        Style().configure('TNotebook', tabposition='wn')
+        frame = Notebook(parent,style='TNotebook')
+        self.tk_tabs_Main_Tabs_0 = self.__tk_frame_Main_Tabs_0(frame)
+        frame.add(self.tk_tabs_Main_Tabs_0, text="主页")
+        self.tk_tabs_Main_Tabs_1 = self.__tk_frame_Main_Tabs_1(frame)
+        frame.add(self.tk_tabs_Main_Tabs_1, text="设置")
+        self.tk_tabs_Main_Tabs_2 = self.__tk_frame_Main_Tabs_2(frame)
+        frame.add(self.tk_tabs_Main_Tabs_2, text="配置")
+        frame.place(x=0, y=0, width=620, height=460)
+        return frame
+    def __tk_frame_Main_Tabs_0(self,parent):
+        frame = Frame(parent)
+        frame.place(x=0, y=0, width=620, height=460)
+        return frame
+    def __tk_frame_Main_Tabs_1(self,parent):
+        frame = Frame(parent)
+        frame.place(x=0, y=0, width=620, height=460)
+        return frame
+    def __tk_frame_Main_Tabs_2(self,parent):
+        frame = Frame(parent)
+        frame.place(x=0, y=0, width=620, height=460)
+        return frame
     def __tk_label_Stable_loca(self,parent):
         try:  
             with open(os.getcwd()+"/config.json", "r", encoding='utf-8') as config_file:  
@@ -219,29 +127,200 @@ class WinGUI(Tk):
             print(e)
             current_tag_name = ""  
         label = Label(parent,text="当前版本:"+current_tag_name,anchor="center", )
-        label.place(x=60, y=420, width=130, height=30)
-        return label
-    def __tk_label_Stable_online(self,parent):
-        label = Label(parent,text="标签",anchor="center", )
-        label.place(x=205, y=420, width=130, height=30)
+        label.place(x=65, y=420, width=130, height=30)
         return label
     def __tk_button_Check_Update_Button(self,parent):
         btn = Button(parent, text="检查", takefocus=False,)
         btn.place(x=0, y=420, width=50, height=30)
         return btn
+    def __tk_label_Stable_online(self,parent):
+        label = Label(parent,text="在线更新",anchor="center", )
+        label.place(x=200, y=420, width=130, height=30)
+        return label
+    def __tk_button_Update_button(self,parent):
+        btn = Button(parent, text="更新", takefocus=False,)
+        btn.place(x=0, y=380, width=50, height=30)
+        return btn
+    def __tk_select_box_Config_Select(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=70, y=0, width=150, height=30)
+        return cb
+    def __tk_label_frame_ADB_Setting_Frame(self,parent):
+        frame = LabelFrame(parent,text="设置",)
+        frame.place(x=0, y=0, width=610, height=140)
+        return frame
+    def __tk_label_ADB_Part_Label(self,parent):
+        label = Label(parent,text="ADB地址",anchor="center", )
+        label.place(x=0, y=0, width=70, height=30)
+        return label
+    def __tk_label_ADB_Address_Label(self,parent):
+        label = Label(parent,text="ADB端口",anchor="center", )
+        label.place(x=0, y=40, width=70, height=30)
+        return label
+    def __tk_button_Auto_Detect_ADB_Button(self,parent):
+        btn = Button(parent, text="自动检测", takefocus=False,)
+        btn.place(x=0, y=80, width=70, height=30)
+        return btn
+    def __tk_input_ADB_Address_Input(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=80, y=0, width=150, height=30)
+        return ipt
+    def __tk_input_ADB_Path_Input(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=80, y=40, width=150, height=30)
+        return ipt
+    def __tk_select_box_Auto_Detect_ADB_Select(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=80, y=80, width=150, height=30)
+        return cb
+    def __tk_label_Controller_Type_Label(self,parent):
+        label = Label(parent,text="控制端",anchor="center", )
+        label.place(x=235, y=0, width=70, height=30)
+        return label
+    def __tk_label_Resource_Type_Label(self,parent):
+        label = Label(parent,text="客户端",anchor="center", )
+        label.place(x=410, y=0, width=70, height=30)
+        return label
+    def __tk_select_box_Controller_Type_Select(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=315, y=0, width=80, height=30)
+        return cb
+    def __tk_select_box_Resource_Type_Select(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=490, y=0, width=80, height=30)
+        return cb
+    def __tk_label_StartApp(self,parent):
+        label = Label(parent,text="启动地址",anchor="center", )
+        label.place(x=240, y=40, width=70, height=30)
+        return label
+    def __tk_input_StartAPP_Address(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=320, y=40, width=130, height=30)
+        return ipt
+    def __tk_input_StartAPP_Address_P(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=460, y=40, width=40, height=30)
+        return ipt
+    def __tk_label_StartAPP_P(self,parent):
+        label = Label(parent,text="参数",anchor="center", )
+        label.place(x=510, y=40, width=50, height=30)
+        return label
+    def __tk_label_Tips_Setting(self,parent):
+        label = Label(parent,text="根据控制端类型填入启动器或者游戏启动方式",anchor="center", )
+        label.place(x=230, y=80, width=340, height=30)
+        return label
+    def __tk_label_frame_Task_List_Frame(self,parent):
+        frame = LabelFrame(parent,text="任务列表",)
+        frame.place(x=380, y=10, width=240, height=425)
+        return frame
+    def __tk_list_box_Task_List(self,parent):
+        lb = Listbox(parent)
+        for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
+            lb.insert(END, item)
+        lb.place(x=10, y=0, width=220, height=390)
+        return lb
+    def __tk_label_frame_Select_Task_Frame(self,parent):
+        frame = LabelFrame(parent,text="选择任务",)
+        frame.place(x=0, y=10, width=240, height=425)
+        return frame
+    def __tk_label_Add_Task_Label_1(self,parent):
+        label = Label(parent,text="隐藏标签1",anchor="center", )
+        label.place(x=0, y=40, width=70, height=30)
+        return label
+    def __tk_label_Add_Task_Label_3(self,parent):
+        label = Label(parent,text="隐藏标签3",anchor="center", )
+        label.place(x=0, y=120, width=70, height=30)
+        return label
+    def __tk_label_Add_Task_Label_2(self,parent):
+        label = Label(parent,text="隐藏标签2",anchor="center", )
+        label.place(x=0, y=80, width=70, height=30)
+        return label
+    def __tk_select_box_Add_Task_Select(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=80, y=0, width=150, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_2(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=80, y=80, width=150, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_1(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=80, y=40, width=150, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_3(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=80, y=120, width=150, height=30)
+        return cb
+    def __tk_select_box_Add_Task_Select_4(self,parent):
+        cb = Combobox(parent, state="readonly", )
+        cb['values'] = ("")
+        cb.place(x=80, y=160, width=150, height=30)
+        return cb
+    def __tk_label_Add_Task_Label_4(self,parent):
+        label = Label(parent,text="隐藏标签4",anchor="center", )
+        label.place(x=0, y=160, width=70, height=30)
+        return label
+    def __tk_label_Add_Task_Label(self,parent):
+        label = Label(parent,text="任务",anchor="center", )
+        label.place(x=0, y=0, width=70, height=30)
+        return label
+    def __tk_frame_Button_Frame(self,parent):
+        frame = LabelFrame(parent,text="",)
+        frame.place(x=260, y=20, width=100, height=240)
+        return frame
+    def __tk_button_Delete_Button(self,parent):
+        btn = Button(parent, text="删除", takefocus=False,)
+        btn.place(x=15, y=120, width=70, height=30)
+        return btn
+    def __tk_button_Move_Down_Button(self,parent):
+        btn = Button(parent, text="下移", takefocus=False,)
+        btn.place(x=15, y=80, width=70, height=30)
+        return btn
+    def __tk_button_Start_Task(self,parent):
+        btn = Button(parent, text="开始任务", takefocus=False,)
+        btn.place(x=15, y=160, width=70, height=30)
+        return btn
+    def __tk_button_Add_Task_Button(self,parent):
+        btn = Button(parent, text="添加任务", takefocus=False,)
+        btn.place(x=15, y=0, width=70, height=30)
+        return btn
+    def __tk_button_Move_Up_Button(self,parent):
+        btn = Button(parent, text="上移", takefocus=False,)
+        btn.place(x=15, y=40, width=70, height=30)
+        return btn
+    def __tk_label_Config_Label(self,parent):
+        label = Label(parent,text="标签",anchor="center", )
+        label.place(x=0, y=0, width=50, height=30)
+        return label
+    def __tk_label_frame_Output_Frame(self,parent):
+        frame = LabelFrame(parent,text="输出内容",)
+        frame.place(x=0, y=460, width=630, height=140)
+        return frame
+    def __tk_text_Output_Text(self,parent):
+        text = Text(parent)
+        text.place(x=13, y=0, width=604, height=118)
+        self.create_bar(parent, text,True, True, 13, 0, 604,118,630,140)
+        return text
 class Win(WinGUI):
     def __init__(self, controller):
         self.ctl = controller
         super().__init__()
         self.__event_bind()
+        self.__style_config()
         self.ctl.init(self)
-
     def __event_bind(self):
         self.tk_button_Start_Task.bind('<Button-1>',self.ctl.Start_Task)
         self.tk_input_ADB_Path_Input.bind('<Return>',self.ctl.Save_ADB_Path)
         self.tk_input_ADB_Address_Input.bind('<Return>',self.ctl.Save_ADB_Address)
         self.tk_select_box_Resource_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Resource_Type_Select)
-        self.tk_select_box_Resource_Type_Select.bind('<Button-1>',self.ctl.Save_ADB_Path)
         self.tk_select_box_Add_Task_Select.bind('<<ComboboxSelected>>',self.ctl.Add_Task_Select_More_Select)
         self.tk_select_box_Add_Task_Select.bind('<Enter>',self.ctl.Save_ADB_Address)
         self.tk_button_Add_Task_Button.bind('<Button-1>',self.ctl.Add_Task)
@@ -251,10 +330,10 @@ class Win(WinGUI):
         self.tk_select_box_Controller_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Controller_Type_Select)
         self.tk_list_box_Task_List.bind('<Delete>',self.ctl.Click_Delete_Button)
         self.tk_button_Update_button.bind('<Button-1>',self.ctl.Update)
-        self.tk_select_box_Resource_Type_Select.bind('<Button-1>',self.ctl.Save_ADB_Path)
-        self.tk_select_box_Add_Task_Select.bind('<Enter>',self.ctl.Save_ADB_Address)
         self.tk_button_Check_Update_Button.bind('<Button-1>',self.ctl.Check_Update)
-        self.tk_select_box_Controller_Type_Select.bind('<<ComboboxSelected>>',self.ctl.Save_Controller_Type_Select)
+        self.tk_button_Auto_Detect_ADB_Button.bind('<Button-1>',self.ctl.Click_Auto_Detect_ADB)
+    def __style_config(self):
+        pass
 if __name__ == "__main__":
     win = WinGUI()
     win.mainloop()
