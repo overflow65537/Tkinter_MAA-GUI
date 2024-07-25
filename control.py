@@ -8,12 +8,11 @@ import shutil
 from tkinter import messagebox  
 import threading
 
-
 #获取初始resource序号
 Add_Resource_Type_Select_Values = []
-for i in Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")["resource"]:
+for i in Read_MAA_Config(os.getcwd()+"\\MAA_bin\\interface.json")["resource"]:
     Add_Resource_Type_Select_Values.append(i["name"])
-Resource_Type = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["resource"]
+Resource_Type = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")["resource"]
 
 Resource_count = 0
 for i in Add_Resource_Type_Select_Values:
@@ -24,9 +23,9 @@ for i in Add_Resource_Type_Select_Values:
 
 #获取初始Controller序号
 Add_Controller_Type_Select_Values = []
-for i in Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")["controller"]:
+for i in Read_MAA_Config(os.getcwd()+"\\MAA_bin\\interface.json")["controller"]:
     Add_Controller_Type_Select_Values.append(i["name"])
-Controller_Type = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["controller"]["name"]
+Controller_Type = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")["controller"] ["name"]
 
 Controller_count = 0
 for i in Add_Controller_Type_Select_Values:
@@ -37,8 +36,8 @@ for i in Add_Controller_Type_Select_Values:
 
 
 #初始显示
-init_ADB_Path = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["adb"]["adb_path"]
-init_ADB_Address = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")["adb"]["address"]
+init_ADB_Path = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")["adb"]["adb_path"]
+init_ADB_Address = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")["adb"]["address"]
 init_Resource_Type = Resource_count
 init_Controller_Type = Controller_count
 
@@ -56,9 +55,9 @@ class Controller:
         # TODO 组件初始化 赋值操作
         
         #服务器资源 
-        self.ui.tk_select_box_Resource_Type_Select['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","resource"))
-        self.ui.tk_select_box_Add_Task_Select['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","task"))
-        self.ui.tk_select_box_Controller_Type_Select['values'] = (Get_Values_list(os.getcwd()+"\MAA_bin\interface.json","controller"))
+        self.ui.tk_select_box_Resource_Type_Select['values'] = (Get_Values_list(os.getcwd()+"\\MAA_bin\\interface.json","resource"))
+        self.ui.tk_select_box_Add_Task_Select['values'] = (Get_Values_list(os.getcwd()+"\\MAA_bin\\interface.json","task"))
+        self.ui.tk_select_box_Controller_Type_Select['values'] = (Get_Values_list(os.getcwd()+"\\MAA_bin\\interface.json","controller"))
         #ADB地址和端口输入框
         self.ui.tk_input_ADB_Address_Input.insert(0,init_ADB_Address)
         self.ui.tk_input_ADB_Path_Input.insert(0,init_ADB_Path)
@@ -83,35 +82,40 @@ class Controller:
 
     def Start_Task(self,evt):
         #使用-d参数打开MaaPiCli.exe
-        subprocess.Popen(os.getcwd()+"\MAA_bin\MaaPiCli.exe -d")
+        subprocess.Popen(os.getcwd()+"\\MAA_bin\\MaaPiCli.exe -d")
 
     def Save_ADB_Path(self,evt):
         #打开maa_pi_config.json并写入新的ADB路径
         ADB_Path = self.ui.tk_input_ADB_Path_Input.get().replace("\\","/")
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         MAA_Pi_Config["adb"]["adb_path"] = ADB_Path
-        Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
 
     def Save_ADB_Address(self,evt):
         #打开maa_pi_config.json并写入新的ADB端口
         ADB_Address = self.ui.tk_input_ADB_Address_Input.get()
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         MAA_Pi_Config["adb"]["address"] = ADB_Address
-        Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
 
     def Save_Resource_Type_Select(self,evt):
         #打开maa_pi_config.json并写入新的资源
         Resource_Type_Select = self.ui.tk_select_box_Resource_Type_Select.get()
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         MAA_Pi_Config["resource"] = Resource_Type_Select
-        Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
 
     def Save_Controller_Type_Select(self,evt):
         #打开maa_pi_config.json并写入新的控制端
         Controller_Type_Select = self.ui.tk_select_box_Controller_Type_Select.get()
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
-        MAA_Pi_Config["controller"] = Controller_Type_Select
-        Save_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        interface_Controller = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\interface.json")["controller"]
+        
+        for i in interface_Controller:
+            if i["name"] == Controller_Type_Select:
+                Controller_target = i
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
+        MAA_Pi_Config["controller"] = Controller_target
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
 
     def Add_Task(self,evt):
         #添加任务至GUI列表并保存配置文件
@@ -119,7 +123,7 @@ class Controller:
 
         Option = []
         Select_Target = self.ui.tk_select_box_Add_Task_Select.get()
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\interface.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\interface.json")
         #Option_list存放所有带有option的键值
         Option_list = []
         for i in MAA_Pi_Config["task"]:
@@ -137,25 +141,25 @@ class Controller:
                     selected_value = getattr(self.ui, select_box_name).get()  
                     options_dicts.append({"name": i["option"][index], "value": selected_value})  
                 Option.extend(options_dicts)
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         MAA_Pi_Config["task"].append({"name": task,"option": Option})
-        Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
         #刷新GUI任务列表
         self.ui.tk_list_box_Task_List.delete(0,100)#为什么END用不了?那我直接选第100位,什么时候真有100个任务了我就写1000位
-        for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
+        for item in Get_Values_list_Option(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
 
     
     def Click_Move_Up_Button(self,evt):
         #上移任务
         Select_Target = self.ui.tk_list_box_Task_List.curselection()[0]
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         Select_Task = MAA_Pi_Config["task"].pop(Select_Target)
         MAA_Pi_Config["task"].insert(Select_Target-1, Select_Task)
-        Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
         #刷新GUI任务列表
         self.ui.tk_list_box_Task_List.delete(0,100)
-        for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
+        for item in Get_Values_list_Option(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
         self.ui.tk_list_box_Task_List.selection_set(Select_Target-1)
 
@@ -163,13 +167,13 @@ class Controller:
     def Click_Move_Down_Button(self,evt):
         #下移任务
         Select_Target = self.ui.tk_list_box_Task_List.curselection()[0]
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         Select_Task = MAA_Pi_Config["task"].pop(Select_Target)
         MAA_Pi_Config["task"].insert(Select_Target+1, Select_Task)
-        Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
         #刷新GUI任务列表
         self.ui.tk_list_box_Task_List.delete(0,100)
-        for item in Get_Values_list_Option(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task"):
+        for item in Get_Values_list_Option(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json","task"):
             self.ui.tk_list_box_Task_List.insert(100, item)
         self.ui.tk_list_box_Task_List.selection_set(Select_Target+1)
 
@@ -178,12 +182,12 @@ class Controller:
         #删除选定任务
         Select_Target = self.ui.tk_list_box_Task_List.curselection()[0]
         self.ui.tk_list_box_Task_List.delete(Select_Target)
-        Task_List = Get_Values_list2(os.getcwd()+"\MAA_bin\config\maa_pi_config.json","task")
+        Task_List = Get_Values_list2(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json","task")
         del Task_List[Select_Target]
-        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\MAA_bin\config\maa_pi_config.json")
+        MAA_Pi_Config = Read_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json")
         del MAA_Pi_Config["task"]
         MAA_Pi_Config.update({"task":Task_List})
-        Save_MAA_Config(os.getcwd()+"/\MAA_bin\config\maa_pi_config.json",MAA_Pi_Config)
+        Save_MAA_Config(os.getcwd()+"\\MAA_bin\\config\\maa_pi_config.json",MAA_Pi_Config)
         self.ui.tk_list_box_Task_List.selection_set(Select_Target-1)
 
 
@@ -197,7 +201,7 @@ class Controller:
     
         # 使用after()方法延迟执行  
         def delayed_update():  
-            MAA_Pi_Config = Read_MAA_Config(os.getcwd() + "\MAA_bin\interface.json")  
+            MAA_Pi_Config = Read_MAA_Config(os.getcwd() + "\\MAA_bin\\interface.json")  
     
             # 查找是否有选中的任务并包含option  
             for task in MAA_Pi_Config["task"]:  
@@ -212,11 +216,11 @@ class Controller:
     
                         # 填充下拉框数据  
                         select_box['values'] = tuple(Get_Task_List(option_name))  
-                        select_box.place(x=80, y=40 + (i * 40), width=150, height=30)  
+                        select_box.place(x=110, y=40 + (i * 40), width=200, height=30)  
     
                         # 显示标签  
                         label["text"] = option_name  
-                        label.place(x=0, y=40 + (i * 40), width=70, height=30)  
+                        label.place(x=0, y=40 + (i * 40), width=100, height=30)  
     
                         # 刷新GUI
                         select_box.update()  
@@ -230,7 +234,7 @@ class Controller:
         # 隐藏并清除所有额外的下拉框和标签的选项  
         for i in range(1, 5): 
             select_box = getattr(self.ui, f'tk_select_box_Add_Task_Select_{i}')  
-            select_box.set(" ")  # 清除选项
+            select_box.set("")  # 清除选项
             select_box.place_forget()  # 隐藏下拉框  
             
             label = getattr(self.ui, f'tk_label_Add_Task_Label_{i}')  
@@ -240,13 +244,13 @@ class Controller:
         threading.Thread(target=self._check_update_thread_function, daemon=True).start()
     
     def _check_update_thread_function(self):
-        with open(os.getcwd()+"/config.json","r",encoding='utf-8') as GUI_Config:
+        with open(os.getcwd()+"\\config.json","r",encoding='utf-8') as GUI_Config:
             url =  json.load(GUI_Config)["url"]
             
         global Cont
         Cont=requests.get(url).json()
         #显示版本
-        self.ui.tk_label_Stable_online.place(x=200, y=400, width=130, height=30)
+        self.ui.tk_label_Stable_online.place(x=200, y=420, width=130, height=30)
         self.ui.tk_label_Stable_online["text"] = "最新版本"+Cont["tag_name"]
         self.ui.tk_label_Stable_online.update()
 
@@ -266,7 +270,7 @@ class Controller:
         zip_url = browser_download_url[0]
                 # 读取config.json中的当前tag_name  
         try:  
-            with open(os.getcwd()+"/config.json", "r", encoding='utf-8') as config_file:  
+            with open(os.getcwd()+"\\config.json", "r", encoding='utf-8') as config_file:  
                 config_data = json.load(config_file)  
                 current_tag_name = config_data.get("tag_name", "")  
         except Exception as e:  
@@ -280,7 +284,7 @@ class Controller:
         if new_tag_name != current_tag_name:  
             # 更新config.json  
             config_data["tag_name"] = new_tag_name  
-            with open(os.getcwd()+"/config.json", "w", encoding='utf-8') as config_file:  
+            with open(os.getcwd()+"\\config.json", "w", encoding='utf-8') as config_file:  
                 json.dump(config_data, config_file, indent=4, ensure_ascii=False)  
 
         # 检查MAA-bin文件夹是否存在，如果不存在则创建它  
@@ -309,5 +313,86 @@ class Controller:
             messagebox.showerror("下载错误", str(e))  
         except Exception as e:  
             messagebox.showerror("错误", str(e))  
-    def Click_Auto_Detect_ADB(self):
-        pass
+    def Click_Auto_Detect_ADB(self,evt):
+        # 使用threading启动一个新线程来执行更新操作  
+        threading.Thread(target=self._Click_Auto_Detect_ADB_thread_function, daemon=True).start()
+    def _Click_Auto_Detect_ADB_thread_function(self):
+        emulator = [
+            {
+                "name":"BlueStacks",
+                "exe_name":"HD-Player.exe",
+                "may_path":["HD-Adb.exe","Engine\\ProgramFiles\\HD-Adb.exe"],
+                "port":["127.0.0.1:5555","127.0.0.1:5556","127.0.0.1:5565","127.0.0.1:5575"]
+            },
+            {
+                "name":"MuMuPlayer12",
+                "exe_name":"MuMuPlayer.exe",
+                "may_path":["vmonitor\\bin\\adb_server.exe","MuMu\\emulator\\nemu\\vmonitor\\bin\\adb_server.exe","adb.exe"],
+                "port":["127.0.0.1:16384", "127.0.0.1:16416", "127.0.0.1:16448"]
+            },
+            {
+                "name":"LDPlayer",
+                "exe_name":"dnplayer.exe",
+                "may_path":["adb.exe"],
+                "port":["127.0.0.1:5555","127.0.0.1:5556"]
+            },
+            {
+                "name":"Nox",
+                "exe_name":"Nox.exe",
+                "may_path":["nox_adb.exe"],
+                "port":["127.0.0.1:62001", "127.0.0.1:59865"]
+            },
+            {
+                "name":"MuMuPlayer6",
+                "exe_name":"NemuPlayer.exe",
+                "may_path":["vmonitor\\bin\\adb_server.exe","MuMu\\emulator\\nemu\\vmonitor\\bin\\adb_server.exe","adb.exe"],
+                "port":["127.0.0.1:7555"]
+            },
+            {
+                "name":"MEmuPlayer.exe",
+                "exe_name":"MEmu",
+                "may_path":["adb.exe"],
+                "port":["127.0.0.1:21503"]
+            },
+            {
+                "name":"ADV",
+                "exe_name":"qemu-system.exe",
+                "may_path":["..\\..\\..\\platform-tools\\adb.exe"],
+                "port":["127.0.0.1:5555"]
+            }
+]       
+        global emulator_result
+        emulator_result = []
+        for app in emulator:
+            process_path = find_process_by_name(app["exe_name"])
+            
+            if process_path:
+                #判断程序是否正在运行,是进行下一步,否则放弃
+                info_dict = {"exe_path":process_path,"may_path":app["may_path"]}
+                ADB_path = find_existing_file(info_dict)
+                if ADB_path:
+                    
+                    #判断ADB地址是否存在,是进行下一步,否则放弃
+                    port_data = check_port(app["port"])
+                    if port_data:
+                        #判断端口是否存在,是则组合字典,否则放弃
+                        emulator_result.extend([{"name":app["name"],"path":ADB_path,"port": item} for item in port_data])
+        
+        if emulator_result:
+            processed_list = [] 
+            print("查找完成")
+            for i in emulator_result:
+                processed_s = f"{i['name']}"
+                processed_list.append(processed_s)
+            self.ui.tk_select_box_Auto_Detect_ADB_Select['values'] = processed_list
+            self.ui.tk_select_box_Auto_Detect_ADB_Select.update()
+        else:
+            print("未找到模拟器")
+    def Replace_ADB_data(self,evt):
+        print(emulator_result[self.ui.tk_select_box_Auto_Detect_ADB_Select.current()]["port"])
+        print(emulator_result[self.ui.tk_select_box_Auto_Detect_ADB_Select.current()]["path"])
+        self.ui.tk_input_ADB_Address_Input.delete(0,100)
+        self.ui.tk_input_ADB_Path_Input.delete(0,100)
+        self.ui.tk_input_ADB_Address_Input.insert(0,emulator_result[self.ui.tk_select_box_Auto_Detect_ADB_Select.current()]["port"])
+        self.ui.tk_input_ADB_Path_Input.insert(0,emulator_result[self.ui.tk_select_box_Auto_Detect_ADB_Select.current()]["path"])
+        #保存ADB信息
