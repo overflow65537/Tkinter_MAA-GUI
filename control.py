@@ -305,7 +305,7 @@ class Controller:
         #找出win-x86_64版本的下载地址
         browser_download_url = []
         for i in Cont["assets"]:
-            if i["name"] == "MSBA-win-x86_64-"+Cont["tag_name"]+".zip":
+            if "win-x86_64" in i["name"]:
                 browser_download_url.append(i["browser_download_url"])
         zip_url = browser_download_url[0]
                 # 读取config.json中的当前tag_name  
@@ -337,6 +337,7 @@ class Controller:
     
         # 下载ZIP文件  
         try:  
+            print("开始下载")
             with requests.get(zip_url, stream=True) as r:  
                 r.raise_for_status()  # 如果响应状态码不是200，则抛出HTTPError异常  
                 with open(zip_file_path, "wb") as f:  

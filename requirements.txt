@@ -1,0 +1,13 @@
+certifi==2024.2.2
+chardet==5.2.0
+charset_normalizer==3.3.2
+concurrencytest==0.1.2
+cryptography==43.0.0
+idna==3.7
+mock==5.1.0
+pyOpenSSL==24.2.1
+pywin32==306
+simplejson==3.19.2
+urllib3==2.2.2
+wheel==0.43.0
+wmi==1.5.1
