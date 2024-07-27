@@ -1,6 +1,7 @@
 # MAA_Tkinter
 一个基于Tkinter的MAAFW-GUI项目
-![image](https://github.com/overflow65537/Tkinter_MAA-GUI/blob/main/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/%E4%B8%BB%E7%95%8C%E9%9D%A2.png)
+![image](/示例图片/maa主界面A.png)
+![image](/示例图片/maa主界面B.png)
 # 使用方式
 - 下载[最新版本](https://github.com/overflow65537/Tkinter_MAA-GUI/releases) 并解压
 - 下载需要启动的maapicli程序
