@@ -7,7 +7,7 @@
 - 下载需要启动的maapicli程序
 - 将程序放入MAA_bin文件夹
 - 完成后MAA_bin文件夹应该和图片一样
-- ![image](https://github.com/overflow65537/Tkinter_MAA-GUI/blob/main/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/MAA_bin%E5%9B%BE%E7%89%87.png)
+- ![image](/示例图片/MAA_bin图片.png)
 - 返回MAA-GUI文件夹
 - 启动MAA-GUI.exe
 - 输入ADB端口和ADB地址并回车保存(无法输入小数点可以复制进去)
