@@ -14,14 +14,12 @@
 - 输入任务
 - 开始运行
   
-# 自动更新使用方式
-- MAA-GUI.exe目录下创建config.json
-- 内容为```{"url":"https://api.github.com/repos/作者名/项目名/releases/latest"}```
-- 比如```{"url":"https://api.github.com/repos/overflow65537/MAA_SnowBreak/releases/latest"}```
-- 启动MAA-GUI.exe
-- 点击检查
-- 点击更新
-
+# config.json设置
+- ```url```:填写项目的更新地址,填写后才可使用自动更新.例如```{"url":"https://api.github.com/repos/作者名/项目名/releases/latest"}``` ***必填***
+- ```tag_name```:填写本地项目的版本号,例如```"tag_name": "v1.8.4"``` 更新后会自动生成
+- ```startapp```:填写启动app,使用后会自动生成
+- ```startapp_p```填写启动app参数,使用后会自动生成
+- ```"startapp_w```填写启动app等待时间,使用后会自动生成
 # 视频教程
 - https://bilibili.com/video/BV1ZBbJeSEHF
 # 任务进度
