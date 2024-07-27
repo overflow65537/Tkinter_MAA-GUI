@@ -4,6 +4,7 @@
 /zipfile
 /tkinter
 /requests
+/psutil
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -171,3 +172,4 @@ os.py
 shutil.py
 config.json
 threading.py
+socket.py

@@ -10,7 +10,6 @@ class WinGUI(Tk):
         self.tk_button_Check_Update_Button = self.__tk_button_Check_Update_Button( self.tk_tabs_Main_Tabs_1)
         self.tk_label_Stable_online = self.__tk_label_Stable_online( self.tk_tabs_Main_Tabs_1)
         self.tk_button_Update_button = self.__tk_button_Update_button( self.tk_tabs_Main_Tabs_1)
-        self.tk_select_box_Config_Select = self.__tk_select_box_Config_Select( self.tk_tabs_Main_Tabs_2)
         self.tk_label_frame_ADB_Setting_Frame = self.__tk_label_frame_ADB_Setting_Frame( self.tk_tabs_Main_Tabs_1)
         self.tk_label_ADB_Part_Label = self.__tk_label_ADB_Part_Label( self.tk_label_frame_ADB_Setting_Frame) 
         self.tk_label_ADB_Address_Label = self.__tk_label_ADB_Address_Label( self.tk_label_frame_ADB_Setting_Frame) 
@@ -45,14 +44,14 @@ class WinGUI(Tk):
         self.tk_button_Start_Task = self.__tk_button_Start_Task( self.tk_frame_Button_Frame) 
         self.tk_button_Add_Task_Button = self.__tk_button_Add_Task_Button( self.tk_frame_Button_Frame) 
         self.tk_button_Move_Up_Button = self.__tk_button_Move_Up_Button( self.tk_frame_Button_Frame) 
-        self.tk_label_Config_Label = self.__tk_label_Config_Label( self.tk_tabs_Main_Tabs_2)
-        self.tk_label_frame_Output_Frame = self.__tk_label_frame_Output_Frame(self)
-        self.tk_text_Output_Text = self.__tk_text_Output_Text( self.tk_label_frame_Output_Frame) 
+        self.tk_label_Tpis_Setting = self.__tk_label_Tpis_Setting( self.tk_label_frame_ADB_Setting_Frame) 
+        self.tk_input_StartAPP_wait = self.__tk_input_StartAPP_wait( self.tk_label_frame_ADB_Setting_Frame) 
+
     def __win(self):
         self.title("MAA-GUI")
         # 设置窗口大小、居中
         width = 800
-        height = 600
+        height = 460
         screenwidth = self.winfo_screenwidth()
         screenheight = self.winfo_screenheight()
         geometry = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
@@ -100,8 +99,6 @@ class WinGUI(Tk):
         frame.add(self.tk_tabs_Main_Tabs_0, text="主页")
         self.tk_tabs_Main_Tabs_1 = self.__tk_frame_Main_Tabs_1(frame)
         frame.add(self.tk_tabs_Main_Tabs_1, text="设置")
-        self.tk_tabs_Main_Tabs_2 = self.__tk_frame_Main_Tabs_2(frame)
-        frame.add(self.tk_tabs_Main_Tabs_2, text="配置")
         frame.place(x=0, y=0, width=800, height=460)
         return frame
     def __tk_frame_Main_Tabs_0(self,parent):
@@ -109,10 +106,6 @@ class WinGUI(Tk):
         frame.place(x=0, y=0, width=800, height=460)
         return frame
     def __tk_frame_Main_Tabs_1(self,parent):
-        frame = Frame(parent)
-        frame.place(x=0, y=0, width=800, height=460)
-        return frame
-    def __tk_frame_Main_Tabs_2(self,parent):
         frame = Frame(parent)
         frame.place(x=0, y=0, width=800, height=460)
         return frame
@@ -139,11 +132,6 @@ class WinGUI(Tk):
         btn = Button(parent, text="更新", takefocus=False,)
         btn.place(x=0, y=360, width=50, height=30)
         return btn
-    def __tk_select_box_Config_Select(self,parent):
-        cb = Combobox(parent, state="readonly", )
-        cb['values'] = ("")
-        cb.place(x=70, y=0, width=150, height=30)
-        return cb
     def __tk_label_frame_ADB_Setting_Frame(self,parent):
         frame = LabelFrame(parent,text="设置",)
         frame.place(x=0, y=0, width=780, height=140)
@@ -171,7 +159,7 @@ class WinGUI(Tk):
     def __tk_select_box_Auto_Detect_ADB_Select(self,parent):
         cb = Combobox(parent, state="readonly", )
         cb['values'] = ("")
-        cb.place(x=80, y=80, width=500, height=30)
+        cb.place(x=80, y=80, width=150, height=30)
         return cb
     def __tk_label_Controller_Type_Label(self,parent):
         label = Label(parent,text="控制端",anchor="center", )
@@ -294,15 +282,14 @@ class WinGUI(Tk):
         label = Label(parent,text="标签",anchor="center", )
         label.place(x=0, y=0, width=50, height=30)
         return label
-    def __tk_label_frame_Output_Frame(self,parent):
-        frame = LabelFrame(parent,text="输出内容",)
-        frame.place(x=42, y=460, width=755, height=140)
-        return frame
-    def __tk_text_Output_Text(self,parent):
-        text = Text(parent)
-        text.place(x=10, y=11, width=740, height=100)
-        self.create_bar(parent, text,True, True, 10, 11, 740,100,760,140)
-        return text
+    def __tk_input_StartAPP_wait(self,parent):
+        ipt = Entry(parent, )
+        ipt.place(x=510, y=40, width=65, height=30)
+        return ipt
+    def __tk_label_Tpis_Setting(self,parent):
+        label = Label(parent,text="启动地址-启动参数-启动延迟",anchor="center", )
+        label.place(x=240, y=80, width=340, height=30)
+        return label
 class Win(WinGUI):
     def __init__(self, controller):
         self.ctl = controller
