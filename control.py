@@ -53,7 +53,7 @@ class Controller:
         得到UI实例，对组件进行初始化配置
         """
         self.ui = ui
-        with open(os.getcwd()+"\\config.json","r") as f :
+        with open(os.getcwd()+"\\config.json","r",encoding='utf-8') as f :
             config_data = json.load(f)
         if "startapp" not in config_data:  
             config_data["startapp"] = ""  
@@ -117,7 +117,7 @@ class Controller:
         subprocess.Popen(os.getcwd()+"\\MAA_bin\\MaaPiCli.exe -d")
 
     def Save_APP_Setting(self,evt):
-        with open(os.getcwd()+"\\config.json","r") as f :
+        with open(os.getcwd()+"\\config.json","r",encoding='utf-8') as f :
             config_data = json.load(f)
         config_data["startapp"] = self.ui.tk_input_StartAPP_Address.get()
         config_data["startapp_p"] = self.ui.tk_input_StartAPP_Address_P.get()
