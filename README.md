@@ -1,5 +1,10 @@
 # MAA_Tkinter
 一个基于Tkinter的MAAFW-GUI项目
+
+***项目已存档***
+
+新项目:https://github.com/overflow65537/MFW-PyQt6
+
 ![image](/示例图片/maa主界面A.png)
 ![image](/示例图片/maa主界面B.png)
 # 使用方式
